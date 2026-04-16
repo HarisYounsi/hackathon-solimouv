@@ -1,0 +1,271 @@
+/* Page Infos Pratiques */
+
+.main {
+  min-height: 100vh;
+}
+
+/* En-tête */
+.entete {
+  background: linear-gradient(135deg, var(--couleur-primaire), var(--couleur-accent));
+  color: white;
+  padding: var(--espacement-xl) var(--espacement-md);
+}
+
+.tag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--espacement-sm);
+}
+
+.titre {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: 900;
+  margin: 0 0 var(--espacement-sm);
+  line-height: 1.2;
+}
+
+.soustitre {
+  font-size: 1rem;
+  opacity: 0.85;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+/* Corps */
+.conteneur {
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding-left: var(--espacement-md);
+  padding-right: var(--espacement-md);
+}
+
+.corps {
+  padding-top: var(--espacement-lg);
+  padding-bottom: var(--espacement-xl);
+}
+
+/* Grille de cartes */
+.grille {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espacement-md);
+  margin-bottom: var(--espacement-xl);
+}
+
+/* Carte info */
+.carte {
+  background: white;
+  border-radius: var(--rayon-lg);
+  box-shadow: var(--ombre-carte);
+  overflow: hidden;
+}
+
+.carteEntete {
+  background: var(--couleur-fond-alt);
+  padding: var(--espacement-sm) var(--espacement-md);
+  display: flex;
+  align-items: center;
+  gap: var(--espacement-sm);
+  border-bottom: 1px solid var(--couleur-bordure);
+}
+
+.carteEmoji {
+  font-size: 1.5rem;
+}
+
+.carteTitre {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--couleur-texte);
+  margin: 0;
+}
+
+.carteCorps {
+  padding: var(--espacement-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacement-sm);
+}
+
+/* Lieu */
+.lieuNom {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--couleur-texte);
+  margin: 0;
+}
+
+.lieuAdresse {
+  color: var(--couleur-texte-leger);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.lieuHoraires {
+  color: var(--couleur-primaire);
+  font-weight: 600;
+  margin: 0;
+  padding: var(--espacement-sm);
+  background: rgba(26, 26, 46, 0.06);
+  border-radius: var(--rayon-sm);
+  font-size: 0.9rem;
+}
+
+/* Transports */
+.listeTransports {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.transportItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--couleur-texte);
+  line-height: 1.5;
+}
+
+.transportPuce {
+  color: var(--couleur-primaire);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.transportNote {
+  font-size: 0.85rem;
+  color: var(--couleur-texte-leger);
+  margin: 0;
+  font-style: italic;
+  padding-top: var(--espacement-sm);
+  border-top: 1px solid var(--couleur-bordure);
+}
+
+/* Accessibilité */
+.listeAccess {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.accessItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--couleur-texte);
+  line-height: 1.5;
+}
+
+.accessCheck {
+  color: #2e7d32;
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+/* Contact */
+.contactListe {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contactItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contactLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--couleur-texte-leger);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.contactValeur {
+  color: var(--couleur-primaire);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.contactValeur:hover {
+  text-decoration: underline;
+}
+
+.contactNote {
+  font-size: 0.85rem;
+  color: var(--couleur-texte-leger);
+  margin: 0;
+  line-height: 1.6;
+  padding-top: var(--espacement-sm);
+  border-top: 1px solid var(--couleur-bordure);
+}
+
+/* Section carte */
+.sectionCarte {
+  background: white;
+  border-radius: var(--rayon-lg);
+  box-shadow: var(--ombre-carte);
+  overflow: hidden;
+}
+
+.titreCarte {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: var(--espacement-md);
+  margin: 0;
+  background: var(--couleur-fond-alt);
+  border-bottom: 1px solid var(--couleur-bordure);
+}
+
+.carteIframe {
+  padding: var(--espacement-xl);
+}
+
+.carteIframeInfo {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacement-sm);
+  background: var(--couleur-fond-alt);
+  border-radius: var(--rayon-md);
+  padding: var(--espacement-xl);
+}
+
+.carteIframeInfo p {
+  margin: 0;
+  color: var(--couleur-texte);
+  font-size: 1rem;
+}
+
+/* Message d'erreur */
+.erreur {
+  padding: var(--espacement-xl);
+  text-align: center;
+  color: #c0392b;
+}
+
+/* Desktop : 2 colonnes */
+@media (min-width: 768px) {
+  .grille {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

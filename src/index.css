@@ -1,0 +1,126 @@
+/**
+ * Styles globaux de l'application Solimouv'
+ * Variables CSS + Reset + Utilitaires de base
+ */
+
+/* -------------------------------------------------------
+   VARIABLES CSS (design tokens)
+   ------------------------------------------------------- */
+:root {
+  /* Couleurs principales */
+  --couleur-primaire: #1a1a2e;
+  --couleur-accent: #16213e;
+  --couleur-secondaire: #f0d060;
+
+  /* Couleurs de texte */
+  --couleur-texte: #1a1a2e;
+  --couleur-texte-leger: #6b7280;
+
+  /* Couleurs de fond */
+  --couleur-fond: #f8f9fa;
+  --couleur-fond-alt: #f0f2f5;
+
+  /* Bordures et ombres */
+  --couleur-bordure: #e5e7eb;
+  --ombre-carte: 0 2px 12px rgba(0, 0, 0, 0.08);
+
+  /* Rayons de bordure */
+  --rayon-sm: 6px;
+  --rayon-md: 10px;
+  --rayon-lg: 16px;
+
+  /* Espacements */
+  --espacement-sm: 12px;
+  --espacement-md: 20px;
+  --espacement-lg: 32px;
+  --espacement-xl: 48px;
+
+  /* Largeur maximale du contenu */
+  --largeur-max: 1100px;
+}
+
+/* -------------------------------------------------------
+   RESET & BASE
+   ------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--couleur-fond);
+  color: var(--couleur-texte);
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  text-align: left;
+}
+
+/* Focus accessible */
+:focus-visible {
+  outline: 3px solid var(--couleur-secondaire);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--couleur-texte);
+}
+
+p {
+  line-height: 1.6;
+}
+
+/* Masquer visuellement mais garder accessible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Layout principal */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.contenu-principal {
+  flex: 1;
+}

@@ -1,0 +1,89 @@
+/* Bouton réutilisable - toutes variantes */
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-weight: 600;
+  border: 2px solid transparent;
+  border-radius: var(--rayon-md);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+/* Tailles */
+.sm {
+  font-size: 0.8rem;
+  padding: 6px 14px;
+}
+
+.md {
+  font-size: 0.95rem;
+  padding: 10px 20px;
+}
+
+.lg {
+  font-size: 1.05rem;
+  padding: 14px 28px;
+}
+
+/* Variante primaire - plein */
+.primaire {
+  background-color: var(--couleur-primaire);
+  color: white;
+  border-color: var(--couleur-primaire);
+}
+
+.primaire:hover:not(.disabled) {
+  background-color: var(--couleur-accent);
+  border-color: var(--couleur-accent);
+}
+
+/* Variante secondaire - accent jaune */
+.secondaire {
+  background-color: var(--couleur-secondaire);
+  color: var(--couleur-primaire);
+  border-color: var(--couleur-secondaire);
+}
+
+.secondaire:hover:not(.disabled) {
+  background-color: #e6c84a;
+  border-color: #e6c84a;
+}
+
+/* Variante contour */
+.contour {
+  background-color: transparent;
+  color: var(--couleur-primaire);
+  border-color: var(--couleur-primaire);
+}
+
+.contour:hover:not(.disabled) {
+  background-color: var(--couleur-primaire);
+  color: white;
+}
+
+/* Variante texte - sans fond */
+.texte {
+  background-color: transparent;
+  color: var(--couleur-primaire);
+  border-color: transparent;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.texte:hover:not(.disabled) {
+  color: var(--couleur-accent);
+  text-decoration: underline;
+}
+
+/* État désactivé */
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

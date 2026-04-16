@@ -1,0 +1,137 @@
+/* Navbar principale - mobile first */
+
+.header {
+  background-color: var(--couleur-primaire);
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav {
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding: 0 var(--espacement-md);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.logoEmoji {
+  font-size: 1.5rem;
+}
+
+.logoAccent {
+  color: var(--couleur-secondaire);
+}
+
+/* Liens desktop - cachés sur mobile */
+.liens {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: var(--espacement-sm);
+}
+
+.lien {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.lien:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.lienActif {
+  background-color: var(--couleur-secondaire);
+  color: var(--couleur-primaire);
+  font-weight: 600;
+}
+
+/* Bouton hamburger - visible sur mobile */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.hamburgerBarre {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: white;
+  border-radius: 2px;
+  transition: transform 0.2s;
+}
+
+/* Menu mobile */
+.menuMobile {
+  background-color: var(--couleur-primaire);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--espacement-sm) 0;
+}
+
+.menuMobile ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lienMobile {
+  display: block;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  padding: var(--espacement-sm) var(--espacement-md);
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.lienMobile:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.lienMobileActif {
+  color: var(--couleur-secondaire);
+  font-weight: 600;
+  border-left: 3px solid var(--couleur-secondaire);
+  padding-left: calc(var(--espacement-md) - 3px);
+}
+
+/* Desktop : afficher les liens, cacher le hamburger */
+@media (min-width: 768px) {
+  .liens {
+    display: flex;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .menuMobile {
+    display: none;
+  }
+}

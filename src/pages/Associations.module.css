@@ -1,0 +1,155 @@
+/* Page Associations */
+
+.main {
+  min-height: 100vh;
+}
+
+/* En-tête */
+.entete {
+  background: linear-gradient(135deg, var(--couleur-primaire), var(--couleur-accent));
+  color: white;
+  padding: var(--espacement-xl) var(--espacement-md);
+}
+
+.tag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--espacement-sm);
+}
+
+.titre {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: 900;
+  margin: 0 0 var(--espacement-sm);
+  line-height: 1.2;
+}
+
+.soustitre {
+  font-size: 1rem;
+  opacity: 0.85;
+  margin: 0;
+}
+
+/* Corps de page */
+.conteneur {
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding-left: var(--espacement-md);
+  padding-right: var(--espacement-md);
+}
+
+.corps {
+  padding-top: var(--espacement-lg);
+  padding-bottom: var(--espacement-xl);
+}
+
+/* Filtres */
+.filtres {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacement-sm);
+  margin-bottom: var(--espacement-lg);
+}
+
+.filtresLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--couleur-texte-leger);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filtresBoutons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filtreBouton {
+  background: white;
+  color: var(--couleur-texte);
+  border: 1.5px solid var(--couleur-bordure);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filtreBouton:hover {
+  border-color: var(--couleur-primaire);
+  color: var(--couleur-primaire);
+}
+
+.filtreBoutonActif {
+  background-color: var(--couleur-primaire);
+  color: white;
+  border-color: var(--couleur-primaire);
+}
+
+/* Grille de cartes */
+.grille {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espacement-md);
+}
+
+/* Actions dans les cartes association */
+.assoActions {
+  display: flex;
+  gap: var(--espacement-sm);
+  flex-wrap: wrap;
+}
+
+.assoLien {
+  color: var(--couleur-primaire);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 4px 10px;
+  border: 1px solid var(--couleur-primaire);
+  border-radius: var(--rayon-sm);
+  transition: all 0.2s;
+}
+
+.assoLien:hover {
+  background-color: var(--couleur-primaire);
+  color: white;
+}
+
+/* Message vide */
+.vide {
+  text-align: center;
+  color: var(--couleur-texte-leger);
+  padding: var(--espacement-xl);
+  font-size: 1rem;
+}
+
+/* Message d'erreur */
+.erreur {
+  padding: var(--espacement-xl);
+  text-align: center;
+  color: #c0392b;
+}
+
+/* Grille multi-colonnes sur tablette */
+@media (min-width: 600px) {
+  .grille {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 3 colonnes sur desktop */
+@media (min-width: 1024px) {
+  .grille {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

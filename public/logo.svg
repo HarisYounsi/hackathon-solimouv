@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Fond bleu nuit -->
+  <rect width="512" height="512" rx="80" fill="#1a1a2e"/>
+
+  <!-- Lettre S stylisée en jaune doré -->
+  <text
+    x="256"
+    y="360"
+    font-family="system-ui, Arial, sans-serif"
+    font-size="340"
+    font-weight="900"
+    text-anchor="middle"
+    fill="#f0d060"
+  >S</text>
+
+  <!-- Petit trait décoratif en bas -->
+  <rect x="156" y="420" width="200" height="12" rx="6" fill="#f0d060" opacity="0.6"/>
+</svg>

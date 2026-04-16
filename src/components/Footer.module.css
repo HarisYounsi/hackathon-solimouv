@@ -1,0 +1,82 @@
+/* Pied de page */
+
+.footer {
+  background-color: var(--couleur-primaire);
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: auto;
+}
+
+.contenu {
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding: var(--espacement-xl) var(--espacement-md);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espacement-lg);
+}
+
+.colonne {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacement-sm);
+}
+
+.titre {
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.accent {
+  color: var(--couleur-secondaire);
+}
+
+.description {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+}
+
+.liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lien {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.lien:hover {
+  color: var(--couleur-secondaire);
+}
+
+/* Bas de page */
+.bas {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--espacement-md);
+  text-align: center;
+}
+
+.bas p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Grille multi-colonnes sur desktop */
+@media (min-width: 768px) {
+  .contenu {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
