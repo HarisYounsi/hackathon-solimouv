@@ -158,49 +158,6 @@
   background-color: var(--couleur-bordure);
 }
 
-/* Bouton Google */
-.btnGoogle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background-color: white;
-  color: var(--couleur-texte);
-  border: 1.5px solid var(--couleur-bordure);
-  border-radius: var(--rayon-md);
-  padding: 11px 20px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
-  width: 100%;
-}
-
-.btnGoogle:hover:not(:disabled) {
-  background-color: #f9fafb;
-  border-color: #9ca3af;
-}
-
-.btnGoogle:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.googleIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  background: linear-gradient(135deg, #4285f4, #34a853, #fbbc05, #ea4335);
-  color: white;
-  border-radius: 50%;
-  font-size: 0.75rem;
-  font-weight: 900;
-  flex-shrink: 0;
-}
-
 /* Lien bas de page */
 .lienBas {
   text-align: center;

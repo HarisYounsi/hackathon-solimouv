@@ -8,6 +8,7 @@ import { useState, type FormEvent } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import type { FirebaseError } from 'firebase/app'
 import { useAuth } from '../contexts/AuthContext'
+import GoogleSignInButton from '../components/GoogleSignInButton'
 import styles from './Auth.module.css'
 
 // Traduction des codes d'erreur Firebase en messages lisibles
@@ -130,15 +131,11 @@ export default function Login() {
         </div>
 
         {/* Bouton Google */}
-        <button
-          className={styles.btnGoogle}
+        <GoogleSignInButton
           onClick={handleGoogle}
           disabled={chargementGoogle}
-          type="button"
-        >
-          <span className={styles.googleIcon} aria-hidden="true">G</span>
-          {chargementGoogle ? 'Connexion...' : 'Continuer avec Google'}
-        </button>
+          loading={chargementGoogle}
+        />
 
         {/* Lien vers inscription */}
         <p className={styles.lienBas}>

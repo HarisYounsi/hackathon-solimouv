@@ -8,6 +8,7 @@ import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import type { FirebaseError } from 'firebase/app'
 import { useAuth } from '../contexts/AuthContext'
+import GoogleSignInButton from '../components/GoogleSignInButton'
 import styles from './Auth.module.css'
 
 function messageErreur(code: string): string {
@@ -166,15 +167,11 @@ export default function Register() {
         </div>
 
         {/* Bouton Google */}
-        <button
-          className={styles.btnGoogle}
+        <GoogleSignInButton
           onClick={handleGoogle}
           disabled={chargementGoogle}
-          type="button"
-        >
-          <span className={styles.googleIcon} aria-hidden="true">G</span>
-          {chargementGoogle ? 'Connexion...' : 'Continuer avec Google'}
-        </button>
+          loading={chargementGoogle}
+        />
 
         {/* Lien vers connexion */}
         <p className={styles.lienBas}>
