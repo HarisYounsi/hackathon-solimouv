@@ -1,7 +1,9 @@
 /**
  * Script d'initialisation de la base Firestore pour Solimouv'
  *
- * Injecte les collections : /associations, /activites, /config/infos
+ * Injecte les collections :
+ *   /associations, /activites, /config/infos
+ *   /reservations, /quiz, /profils
  *
  * Usage :
  *   npm run seed
@@ -20,6 +22,7 @@ import {
   setDoc,
   writeBatch,
   collection,
+  Timestamp,
 } from 'firebase/firestore'
 
 // -------------------------------------------------------
@@ -320,6 +323,253 @@ const infosFestival = {
 }
 
 // -------------------------------------------------------
+// DONNEES — RESERVATIONS
+// -------------------------------------------------------
+
+const reservations = [
+  {
+    id: 'res-01',
+    user_email: 'sophie.martin@email.fr',
+    user_nom: 'Sophie Martin',
+    activite_id: 'act-02',
+    activite_titre: 'Initiation basket fauteuil',
+    association_nom: 'HandiSport Paris',
+    heure_debut: '09:30',
+    heure_fin: '11:00',
+    statut: 'confirmee',
+    date_reservation: Timestamp.fromDate(new Date('2024-06-10T14:23:00')),
+    notif_envoyee: true,
+  },
+  {
+    id: 'res-02',
+    user_email: 'karim.diallo@email.fr',
+    user_nom: 'Karim Diallo',
+    activite_id: 'act-06',
+    activite_titre: 'Tournoi football multiculturel',
+    association_nom: 'Sport & Refugies',
+    heure_debut: '11:00',
+    heure_fin: '13:00',
+    statut: 'confirmee',
+    date_reservation: Timestamp.fromDate(new Date('2024-06-11T09:05:00')),
+    notif_envoyee: true,
+  },
+  {
+    id: 'res-03',
+    user_email: 'amina.benali@email.fr',
+    user_nom: 'Amina Benali',
+    activite_id: 'act-03',
+    activite_titre: 'Atelier self-defense femmes',
+    association_nom: 'Femmes en Mouvement',
+    heure_debut: '10:00',
+    heure_fin: '11:30',
+    statut: 'annulee',
+    date_reservation: Timestamp.fromDate(new Date('2024-06-09T18:47:00')),
+    notif_envoyee: false,
+  },
+]
+
+// -------------------------------------------------------
+// DONNEES — QUIZ SPORT MATCHER (Brique G)
+// -------------------------------------------------------
+
+const quizQuestions = [
+  {
+    id: 'quiz-01',
+    question: "Quel est ton niveau d'energie habituel ?",
+    ordre: 1,
+    emoji: '⚡',
+    options: [
+      {
+        label: 'Calme — je prefere les activites douces',
+        valeur: 'faible',
+        sports_associes: ['Yoga', 'Meditation', 'Gym douce', 'Marche nordique'],
+      },
+      {
+        label: 'Modere — un bon equilibre effort/detente',
+        valeur: 'modere',
+        sports_associes: ['Volley-ball', 'Tennis de table adapte', 'Course a pied', 'Self-defense'],
+      },
+      {
+        label: 'Eleve — je veux me depenser !',
+        valeur: 'eleve',
+        sports_associes: ['Football', 'Boxe', 'Basket fauteuil', 'Para-athletisme'],
+      },
+    ],
+  },
+  {
+    id: 'quiz-02',
+    question: 'Tu preferes pratiquer...',
+    ordre: 2,
+    emoji: '👥',
+    options: [
+      {
+        label: 'Seul(e) — a mon rythme',
+        valeur: 'solo',
+        sports_associes: ['Yoga', 'Course a pied', 'Marche nordique', 'Meditation'],
+      },
+      {
+        label: 'En duo ou petit groupe',
+        valeur: 'duo',
+        sports_associes: ['Tennis de table adapte', 'Self-defense', 'Gym douce'],
+      },
+      {
+        label: 'En equipe — le collectif avant tout',
+        valeur: 'collectif',
+        sports_associes: ['Football', 'Volley-ball', 'Basket fauteuil', 'Jeux collectifs'],
+      },
+    ],
+  },
+  {
+    id: 'quiz-03',
+    question: 'Tu preferes les activites...',
+    ordre: 3,
+    emoji: '🌤️',
+    options: [
+      {
+        label: 'En interieur — peu importe la meteo',
+        valeur: 'interieur',
+        sports_associes: ['Yoga', 'Gym douce', 'Basket fauteuil', 'Tennis de table adapte', 'Self-defense'],
+      },
+      {
+        label: 'En exterieur — au grand air',
+        valeur: 'exterieur',
+        sports_associes: ['Football', 'Course a pied', 'Marche nordique', 'Para-athletisme'],
+      },
+      {
+        label: 'Les deux, ca depend du jour',
+        valeur: 'mixte',
+        sports_associes: ['Volley-ball', 'Jeux collectifs', 'Boxe', 'Arts martiaux'],
+      },
+    ],
+  },
+  {
+    id: 'quiz-04',
+    question: 'Le contact physique avec les autres participants...',
+    ordre: 4,
+    emoji: '🤝',
+    options: [
+      {
+        label: 'Non merci — je prefere sans contact',
+        valeur: 'sans_contact',
+        sports_associes: ['Yoga', 'Marche nordique', 'Course a pied', 'Tennis de table adapte'],
+      },
+      {
+        label: 'Un peu — les contacts legers, ca va',
+        valeur: 'contact_leger',
+        sports_associes: ['Volley-ball', 'Football', 'Gym douce', 'Jeux collectifs'],
+      },
+      {
+        label: 'Oui — pas de probleme avec le contact direct',
+        valeur: 'contact_direct',
+        sports_associes: ['Boxe', 'Self-defense', 'Arts martiaux', 'Basket fauteuil'],
+      },
+    ],
+  },
+  {
+    id: 'quiz-05',
+    question: 'Tu es disponible plutot...',
+    ordre: 5,
+    emoji: '🕐',
+    options: [
+      {
+        label: 'Le matin (avant 12h)',
+        valeur: 'matin',
+        sports_associes: ['Yoga', 'Gym douce', 'Basket fauteuil', 'Marche nordique'],
+      },
+      {
+        label: "L'apres-midi (apres 13h)",
+        valeur: 'apres_midi',
+        sports_associes: ['Volley-ball', 'Self-defense', 'Football', 'Boxe'],
+      },
+      {
+        label: "Peu importe l'horaire",
+        valeur: 'flexible',
+        sports_associes: ['Course a pied', 'Jeux collectifs', 'Para-athletisme', 'Arts martiaux'],
+      },
+    ],
+  },
+  {
+    id: 'quiz-06',
+    question: 'Ton objectif principal en faisant du sport ?',
+    ordre: 6,
+    emoji: '🎯',
+    options: [
+      {
+        label: 'Me detendre et prendre du plaisir',
+        valeur: 'fun',
+        sports_associes: ['Yoga', 'Jeux collectifs', 'Volley-ball', 'Marche nordique'],
+      },
+      {
+        label: 'Prendre soin de ma sante',
+        valeur: 'sante',
+        sports_associes: ['Gym douce', 'Yoga', 'Course a pied', 'Marche nordique', 'Aquagym'],
+      },
+      {
+        label: 'Me depasser et progresser',
+        valeur: 'performance',
+        sports_associes: ['Football', 'Boxe', 'Para-athletisme', 'Basket fauteuil', 'Arts martiaux'],
+      },
+    ],
+  },
+]
+
+// -------------------------------------------------------
+// DONNEES — PROFILS UTILISATEURS
+// -------------------------------------------------------
+
+const profils = [
+  {
+    id: 'uid-mock-sophie-001',
+    prenom: 'Sophie',
+    nom: 'Martin',
+    email: 'sophie.martin@email.fr',
+    avatar_url: '',
+    sports_favoris: ['Yoga', 'Basket fauteuil', 'Marche nordique'],
+    associations_suivies: ['handisport-paris', 'yoga-pour-tous'],
+    reservations_ids: ['res-01'],
+    points_gamification: 120,
+    badges: [
+      {
+        id: 'premier-pas',
+        nom: 'Premier pas',
+        description: "A participe a sa premiere activite Solimouv'",
+        emoji: '👟',
+        date_obtention: Timestamp.fromDate(new Date('2024-06-15T11:00:00')),
+      },
+      {
+        id: 'curieux',
+        nom: 'Curieux·se',
+        description: 'A decouvert le handisport',
+        emoji: '🔍',
+        date_obtention: Timestamp.fromDate(new Date('2024-06-15T11:00:00')),
+      },
+    ],
+    date_inscription: Timestamp.fromDate(new Date('2024-06-08T10:00:00')),
+  },
+  {
+    id: 'uid-mock-karim-002',
+    prenom: 'Karim',
+    nom: 'Diallo',
+    email: 'karim.diallo@email.fr',
+    avatar_url: '',
+    sports_favoris: ['Football', 'Boxe'],
+    associations_suivies: ['sport-refugies', 'arc-en-ciel-sport'],
+    reservations_ids: ['res-02'],
+    points_gamification: 85,
+    badges: [
+      {
+        id: 'premier-pas',
+        nom: 'Premier pas',
+        description: "A participe a sa premiere activite Solimouv'",
+        emoji: '👟',
+        date_obtention: Timestamp.fromDate(new Date('2024-06-15T13:00:00')),
+      },
+    ],
+    date_inscription: Timestamp.fromDate(new Date('2024-06-11T09:05:00')),
+  },
+]
+
+// -------------------------------------------------------
 // FONCTIONS D'INJECTION
 // -------------------------------------------------------
 
@@ -357,6 +607,42 @@ async function seedConfig() {
   console.log('  ok /config/infos injecte')
 }
 
+async function seedReservations() {
+  console.log('\n Reservations injection...')
+  const batch = writeBatch(db)
+  for (const res of reservations) {
+    const { id, ...data } = res
+    batch.set(doc(collection(db, 'reservations'), id), data)
+    console.log('  ok ' + res.user_nom + ' -> ' + res.activite_titre + ' (' + res.statut + ')')
+  }
+  await batch.commit()
+  console.log('  -> ' + reservations.length + ' reservations injectees')
+}
+
+async function seedQuiz() {
+  console.log('\n Quiz injection...')
+  const batch = writeBatch(db)
+  for (const question of quizQuestions) {
+    const { id, ...data } = question
+    batch.set(doc(collection(db, 'quiz'), id), data)
+    console.log('  ok Q' + question.ordre + ' : ' + question.question.slice(0, 45) + '...')
+  }
+  await batch.commit()
+  console.log('  -> ' + quizQuestions.length + ' questions injectees')
+}
+
+async function seedProfils() {
+  console.log('\n Profils injection...')
+  const batch = writeBatch(db)
+  for (const profil of profils) {
+    const { id, ...data } = profil
+    batch.set(doc(collection(db, 'profils'), id), data)
+    console.log('  ok ' + profil.prenom + ' ' + profil.nom + ' (' + profil.points_gamification + ' pts)')
+  }
+  await batch.commit()
+  console.log('  -> ' + profils.length + ' profils injectes')
+}
+
 // -------------------------------------------------------
 // POINT D'ENTREE
 // -------------------------------------------------------
@@ -369,7 +655,11 @@ async function main() {
     await seedAssociations()
     await seedActivites()
     await seedConfig()
+    await seedReservations()
+    await seedQuiz()
+    await seedProfils()
     console.log('\nSeed termine avec succes !')
+    console.log('Collections injectees : associations, activites, config, reservations, quiz, profils')
     console.log('Verifiez vos donnees sur https://console.firebase.google.com')
   } catch (err) {
     console.error('\nErreur pendant le seed :', err)
