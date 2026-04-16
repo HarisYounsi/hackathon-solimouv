@@ -4,7 +4,8 @@
  */
 
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 import styles from './Navbar.module.css'
 
 // Définition des liens de navigation
@@ -22,10 +23,18 @@ const NAV_LINKS: NavLink[] = [
 ]
 
 export default function Navbar() {
-  // État pour contrôler l'ouverture/fermeture du menu mobile
   const [menuOuvert, setMenuOuvert] = useState(false)
+  const { currentUser, logout } = useAuth()
+  const navigate = useNavigate()
 
   const fermerMenu = () => setMenuOuvert(false)
+
+  const prenomAffiche = currentUser?.displayName?.split(' ')[0] ?? 'Mon profil'
+
+  async function handleLogout() {
+    await logout()
+    navigate('/')
+  }
 
   return (
     <header className={styles.header}>
@@ -54,6 +63,32 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
+
+        {/* Zone auth - desktop */}
+        <div className={styles.authZone}>
+          {currentUser ? (
+            <>
+              <NavLink to="/profil" className={styles.lienProfil} onClick={fermerMenu}>
+                {prenomAffiche}
+              </NavLink>
+              <button
+                className={styles.btnDeconnexion}
+                onClick={handleLogout}
+                type="button"
+              >
+                Deconnexion
+              </button>
+            </>
+          ) : (
+            <NavLink
+              to="/login"
+              className={styles.btnConnexion}
+              onClick={fermerMenu}
+            >
+              Connexion
+            </NavLink>
+          )}
+        </div>
 
         {/* Bouton hamburger - mobile uniquement */}
         <button
@@ -86,6 +121,44 @@ export default function Navbar() {
                 </NavLink>
               </li>
             ))}
+
+            {/* Auth mobile */}
+            {currentUser ? (
+              <>
+                <li>
+                  <NavLink
+                    to="/profil"
+                    className={({ isActive }) =>
+                      `${styles.lienMobile} ${isActive ? styles.lienMobileActif : ''}`
+                    }
+                    onClick={fermerMenu}
+                  >
+                    {prenomAffiche} — Mon profil
+                  </NavLink>
+                </li>
+                <li>
+                  <button
+                    className={styles.lienMobileBtnDeconnexion}
+                    onClick={() => { handleLogout(); fermerMenu() }}
+                    type="button"
+                  >
+                    Deconnexion
+                  </button>
+                </li>
+              </>
+            ) : (
+              <li>
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    `${styles.lienMobile} ${isActive ? styles.lienMobileActif : ''}`
+                  }
+                  onClick={fermerMenu}
+                >
+                  Connexion
+                </NavLink>
+              </li>
+            )}
           </ul>
         </div>
       )}

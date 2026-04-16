@@ -1,0 +1,227 @@
+/* Styles partagés Login + Register */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espacement-md);
+  background: linear-gradient(135deg, var(--couleur-primaire) 0%, var(--couleur-accent) 100%);
+}
+
+/* Carte centrale */
+.carte {
+  background: white;
+  border-radius: var(--rayon-lg);
+  padding: var(--espacement-lg);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacement-md);
+}
+
+/* En-tête */
+.entete {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.emoji {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.titre {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--couleur-primaire);
+  margin: 0;
+}
+
+.soustitre {
+  font-size: 0.9rem;
+  color: var(--couleur-texte-leger);
+  margin: 0;
+}
+
+/* Message d'erreur */
+.erreur {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  border-radius: var(--rayon-md);
+  padding: var(--espacement-sm);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Formulaire */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Champs prenom + nom côte à côte sur desktop */
+.champDouble {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--couleur-texte);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.labelHint {
+  font-weight: 400;
+  color: var(--couleur-texte-leger);
+  font-size: 0.78rem;
+}
+
+.input {
+  border: 1.5px solid var(--couleur-bordure);
+  border-radius: var(--rayon-md);
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--couleur-texte);
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--couleur-primaire);
+  box-shadow: 0 0 0 3px rgba(26, 26, 46, 0.08);
+}
+
+.input::placeholder {
+  color: #d1d5db;
+}
+
+/* Bouton principal */
+.btnPrimaire {
+  background-color: var(--couleur-primaire);
+  color: white;
+  border: none;
+  border-radius: var(--rayon-md);
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s;
+  width: 100%;
+}
+
+.btnPrimaire:hover:not(:disabled) {
+  background-color: var(--couleur-accent);
+}
+
+.btnPrimaire:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Séparateur "ou" */
+.separateur {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--couleur-texte-leger);
+  font-size: 0.85rem;
+}
+
+.separateur::before,
+.separateur::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--couleur-bordure);
+}
+
+/* Bouton Google */
+.btnGoogle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: white;
+  color: var(--couleur-texte);
+  border: 1.5px solid var(--couleur-bordure);
+  border-radius: var(--rayon-md);
+  padding: 11px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  width: 100%;
+}
+
+.btnGoogle:hover:not(:disabled) {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.btnGoogle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.googleIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: linear-gradient(135deg, #4285f4, #34a853, #fbbc05, #ea4335);
+  color: white;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+/* Lien bas de page */
+.lienBas {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--couleur-texte-leger);
+  margin: 0;
+}
+
+.lien {
+  color: var(--couleur-primaire);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.lien:hover {
+  color: var(--couleur-accent);
+}
+
+/* Responsive : champDouble en colonne sur mobile étroit */
+@media (max-width: 380px) {
+  .champDouble {
+    grid-template-columns: 1fr;
+  }
+}

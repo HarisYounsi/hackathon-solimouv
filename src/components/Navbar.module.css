@@ -121,6 +121,81 @@
   padding-left: calc(var(--espacement-md) - 3px);
 }
 
+/* Zone auth */
+.authZone {
+  display: none;
+  align-items: center;
+  gap: 10px;
+}
+
+.lienProfil {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.lienProfil:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.btnConnexion {
+  background-color: var(--couleur-secondaire);
+  color: var(--couleur-primaire);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 6px;
+  transition: opacity 0.2s;
+}
+
+.btnConnexion:hover {
+  opacity: 0.85;
+}
+
+.btnDeconnexion {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: inherit;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.btnDeconnexion:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
+  color: white;
+}
+
+/* Deconnexion mobile */
+.lienMobileBtnDeconnexion {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: inherit;
+  font-size: 1rem;
+  padding: var(--espacement-sm) var(--espacement-md);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.lienMobileBtnDeconnexion:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
 /* Desktop : afficher les liens, cacher le hamburger */
 @media (min-width: 768px) {
   .liens {
@@ -133,5 +208,9 @@
 
   .menuMobile {
     display: none;
+  }
+
+  .authZone {
+    display: flex;
   }
 }

@@ -4,16 +4,22 @@
  */
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AuthProvider } from './contexts/AuthContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import ProtectedRoute from './components/ProtectedRoute'
 import Accueil from './pages/Accueil'
 import Associations from './pages/Associations'
 import Programme from './pages/Programme'
 import Infos from './pages/Infos'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Profil from './pages/Profil'
 
 export default function App() {
   return (
     <BrowserRouter>
+    <AuthProvider>
       <div className="app">
         {/* Barre de navigation - présente sur toutes les pages */}
         <Navbar />
@@ -32,6 +38,20 @@ export default function App() {
 
             {/* Informations pratiques */}
             <Route path="/infos" element={<Infos />} />
+
+            {/* Authentification */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            {/* Profil (protege) */}
+            <Route
+              path="/profil"
+              element={
+                <ProtectedRoute>
+                  <Profil />
+                </ProtectedRoute>
+              }
+            />
 
             {/* Route 404 - page non trouvée */}
             <Route
@@ -71,6 +91,7 @@ export default function App() {
         {/* Pied de page - présent sur toutes les pages */}
         <Footer />
       </div>
+    </AuthProvider>
     </BrowserRouter>
   )
 }

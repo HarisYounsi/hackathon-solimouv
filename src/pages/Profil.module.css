@@ -1,0 +1,192 @@
+/* Page profil utilisateur */
+
+.page {
+  min-height: calc(100vh - 60px);
+  background-color: var(--couleur-fond);
+  padding: var(--espacement-md);
+}
+
+.conteneur {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacement-md);
+}
+
+/* Etat de chargement */
+.chargement {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--couleur-texte-leger);
+  font-size: 1rem;
+}
+
+/* En-tete : avatar + identite */
+.entete {
+  display: flex;
+  align-items: center;
+  gap: var(--espacement-md);
+  background: white;
+  border-radius: var(--rayon-lg);
+  padding: var(--espacement-md);
+  box-shadow: var(--ombre-carte);
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--couleur-primaire);
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.identite {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nom {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--couleur-texte);
+  margin: 0;
+}
+
+.email {
+  font-size: 0.875rem;
+  color: var(--couleur-texte-leger);
+  margin: 0;
+}
+
+/* Cartes de section */
+.carte {
+  background: white;
+  border-radius: var(--rayon-lg);
+  padding: var(--espacement-md);
+  box-shadow: var(--ombre-carte);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacement-sm);
+}
+
+.titreCarte {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--couleur-texte);
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--couleur-bordure);
+}
+
+/* Points */
+.points {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.pointsValeur {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--couleur-primaire);
+}
+
+.pointsLabel {
+  font-size: 1rem;
+  color: var(--couleur-texte-leger);
+  font-weight: 500;
+}
+
+/* Badges */
+.listeBadges {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background-color: #fafafa;
+  border-radius: var(--rayon-md);
+  border: 1px solid var(--couleur-bordure);
+}
+
+.badgeEmoji {
+  font-size: 1.8rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.badgeNom {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--couleur-texte);
+  margin: 0 0 2px;
+}
+
+.badgeDesc {
+  font-size: 0.8rem;
+  color: var(--couleur-texte-leger);
+  margin: 0;
+}
+
+/* Tags sports */
+.tags {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background-color: var(--couleur-primaire);
+  color: white;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Texte vide */
+.vide {
+  font-size: 0.875rem;
+  color: var(--couleur-texte-leger);
+  margin: 0;
+  font-style: italic;
+}
+
+/* Bouton deconnexion */
+.btnDeconnexion {
+  background-color: transparent;
+  color: #b91c1c;
+  border: 1.5px solid #fecaca;
+  border-radius: var(--rayon-md);
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  width: 100%;
+}
+
+.btnDeconnexion:hover {
+  background-color: #fef2f2;
+  border-color: #f87171;
+}
