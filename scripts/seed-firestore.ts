@@ -1,16 +1,47 @@
 /**
- * Donnees mock alignees sur la structure Firestore reelle.
- * Utilisees en mode VITE_APP_ENV=development.
- * Les IDs correspondent aux document IDs du script seed.
+ * Script d'initialisation de la base Firestore pour Solimouv'
+ *
+ * Injecte les collections : /associations, /activites, /config/infos
+ *
+ * Usage :
+ *   npm run seed
+ *
+ * Pre-requis :
+ *   - Fichier .env a la racine avec les variables Firebase
+ *   - Regles Firestore permettant les ecritures :
+ *     allow write: if true;  (a securiser apres le seed !)
  */
 
-import type { Association, Activite, InfosFestival } from '../types'
+import 'dotenv/config'
+import { initializeApp } from 'firebase/app'
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  writeBatch,
+  collection,
+} from 'firebase/firestore'
 
 // -------------------------------------------------------
-// ASSOCIATIONS
+// Initialisation Firebase
 // -------------------------------------------------------
 
-export const mockAssociations: Association[] = [
+const app = initializeApp({
+  apiKey: process.env.VITE_FIREBASE_API_KEY,
+  authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.VITE_FIREBASE_APP_ID,
+})
+
+const db = getFirestore(app)
+
+// -------------------------------------------------------
+// DONNEES — ASSOCIATIONS
+// -------------------------------------------------------
+
+const associations = [
   {
     id: 'handisport-paris',
     nom: 'HandiSport Paris',
@@ -18,7 +49,7 @@ export const mockAssociations: Association[] = [
       "Developpement des activites sportives pour les personnes en situation de handicap. Basket fauteuil, tennis de table adapte, para-athletisme. Nous prouvons que le sport ne connait pas de limite.",
     disciplines: ['Basket fauteuil', 'Tennis de table adapte', 'Para-athletisme'],
     publics: ['Personnes en situation de handicap', 'Tous publics'],
-    logo: '/logos/handisport-paris.png',
+    logo: '',
     email: 'contact@handisportparis.fr',
     siteWeb: 'https://handisportparis.fr',
     ordre: 1,
@@ -30,8 +61,9 @@ export const mockAssociations: Association[] = [
       "Utilisation du sport comme vecteur d'integration pour les personnes refugiees et primo-arrivantes. Football, boxe et plein air pour tisser des liens et briser les barrieres culturelles.",
     disciplines: ['Football', 'Boxe', 'Plein air'],
     publics: ['Refugies', 'Primo-arrivants', 'Tous publics'],
-    logo: '/logos/sport-refugies.png',
+    logo: '',
     email: 'contact@sport-refugies.fr',
+    siteWeb: '',
     ordre: 2,
   },
   {
@@ -41,8 +73,9 @@ export const mockAssociations: Association[] = [
       "Association dediee a la pratique sportive feminine dans toute sa diversite. Self-defense, running et sports collectifs dans des espaces bienveillants et securises, ouverts a toutes.",
     disciplines: ['Self-defense', 'Running', 'Sports collectifs'],
     publics: ['Femmes', 'Tous publics'],
-    logo: '/logos/femmes-en-mouvement.png',
+    logo: '',
     email: 'contact@femmes-en-mouvement.fr',
+    siteWeb: '',
     ordre: 3,
   },
   {
@@ -52,8 +85,9 @@ export const mockAssociations: Association[] = [
       "Activites physiques adaptees pour les 60 ans et plus. Maintien de la mobilite, prevention des chutes et lien social. L'activite physique comme cle d'un vieillissement actif et epanoui.",
     disciplines: ['Gym douce', 'Marche nordique', 'Yoga senior', 'Aquagym'],
     publics: ['Seniors 60+'],
-    logo: '/logos/cap-seniors.png',
+    logo: '',
     email: 'contact@cap-seniors.fr',
+    siteWeb: '',
     ordre: 4,
   },
   {
@@ -63,7 +97,7 @@ export const mockAssociations: Association[] = [
       "Association LGBTQIA+-friendly qui cree des espaces sportifs securises et bienveillants. Toutes les disciplines, pour toutes les identites. Le sport comme espace de liberte pour tou·te·s.",
     disciplines: ['Volley-ball', 'Course a pied', 'Arts martiaux'],
     publics: ['LGBTQIA+', 'Tous publics'],
-    logo: '/logos/arc-en-ciel-sport.png',
+    logo: '',
     email: 'contact@arc-en-ciel-sport.fr',
     siteWeb: 'https://arc-en-ciel-sport.fr',
     ordre: 5,
@@ -75,8 +109,9 @@ export const mockAssociations: Association[] = [
       "Sports et jeux collectifs pour les familles avec enfants de 3 a 14 ans. Parcours motricite, jeux d'adresse et defis intergenerationnels pour partager le plaisir du mouvement.",
     disciplines: ['Jeux collectifs', 'Parcours motricite', 'Sports de raquette'],
     publics: ['Familles', 'Enfants 3-14 ans', 'Tous publics'],
-    logo: '/logos/familles-actives.png',
+    logo: '',
     email: 'contact@familles-actives.fr',
+    siteWeb: '',
     ordre: 6,
   },
   {
@@ -86,27 +121,29 @@ export const mockAssociations: Association[] = [
       "Yoga accessible a tous les niveaux et toutes les morphologies. Cours adaptes aux seniors, aux personnes en situation de handicap et aux debutants complets. Venez comme vous etes.",
     disciplines: ['Yoga', 'Meditation', 'Respiration'],
     publics: ['Tous publics', 'Seniors', 'Personnes en situation de handicap'],
-    logo: '/logos/yoga-pour-tous.png',
+    logo: '',
     email: 'contact@yogapourtous.fr',
+    siteWeb: '',
     ordre: 7,
   },
 ]
 
 // -------------------------------------------------------
-// ACTIVITES
+// DONNEES — ACTIVITES
 // -------------------------------------------------------
 
-export const mockActivites: Activite[] = [
+const activites = [
   {
     id: 'act-01',
     titre: 'Yoga matinal inclusif',
     description:
-      "Commencez la journee en douceur avec une seance de yoga adaptee a tous les corps et capacites. Tapis fournis. Venez comme vous etes.",
+      "Commencez la journee en douceur avec une seance de yoga adaptee a tous les corps et capacites. Tapis fournis.",
     association_id: 'yoga-pour-tous',
     association_nom: 'Yoga Pour Tous',
     heure_debut: '09:00',
     heure_fin: '10:00',
     lieu: 'Espace zen - Pelouse nord',
+    places_max: null,
     type: 'initiation',
     publics: ['Tous publics', 'Seniors'],
     emoji: '🧘',
@@ -115,7 +152,7 @@ export const mockActivites: Activite[] = [
     id: 'act-02',
     titre: 'Initiation basket fauteuil',
     description:
-      "Decouvrez le basket en fauteuil roulant ! Fauteuils fournis sur place. Une experience unique pour comprendre le sport adapte de l'interieur.",
+      "Decouvrez le basket en fauteuil roulant ! Fauteuils fournis sur place. Experience unique pour comprendre le sport adapte de l'interieur.",
     association_id: 'handisport-paris',
     association_nom: 'HandiSport Paris',
     heure_debut: '09:30',
@@ -130,7 +167,7 @@ export const mockActivites: Activite[] = [
     id: 'act-03',
     titre: 'Atelier self-defense femmes',
     description:
-      "Atelier pratique de self-defense dans un espace non-mixte bienveillant. Techniques de base, confiance en soi, gestion du stress. Aucune experience requise.",
+      "Atelier pratique de self-defense dans un espace non-mixte bienveillant. Techniques de base, confiance en soi. Aucune experience requise.",
     association_id: 'femmes-en-mouvement',
     association_nom: 'Femmes en Mouvement',
     heure_debut: '10:00',
@@ -145,12 +182,13 @@ export const mockActivites: Activite[] = [
     id: 'act-04',
     titre: 'Parcours famille',
     description:
-      "Parcours ludique a realiser en famille : jeux d'adresse, course d'obstacles adaptee. Pour les enfants de 3 a 14 ans accompagnes d'un adulte.",
+      "Parcours ludique en famille : jeux d'adresse, course d'obstacles adaptee. Pour les 3-14 ans accompagnes d'un adulte.",
     association_id: 'familles-actives',
     association_nom: 'Familles Actives',
     heure_debut: '10:00',
     heure_fin: '12:00',
     lieu: 'Esplanade centrale',
+    places_max: null,
     type: 'initiation',
     publics: ['Familles', 'Enfants 3-14 ans'],
     emoji: '🎯',
@@ -159,7 +197,7 @@ export const mockActivites: Activite[] = [
     id: 'act-05',
     titre: 'Gym douce seniors',
     description:
-      "Seance de gym douce adaptee aux 60 ans et plus : equilibre, souplesse, renforcement musculaire leger. Chaises disponibles pour les exercices assis.",
+      "Seance de gym douce pour les 60 ans et plus : equilibre, souplesse, renforcement leger. Chaises disponibles.",
     association_id: 'cap-seniors',
     association_nom: "Cap'Seniors",
     heure_debut: '10:30',
@@ -174,7 +212,7 @@ export const mockActivites: Activite[] = [
     id: 'act-06',
     titre: 'Tournoi football multiculturel',
     description:
-      "Tournoi de football 5v5 mixte. Equipes constituees sur place. Trophee de la diversite remis a l'equipe la plus fair-play.",
+      "Tournoi 5v5 mixte. Equipes constituees sur place. Trophee de la diversite pour l'equipe la plus fair-play.",
     association_id: 'sport-refugies',
     association_nom: 'Sport & Refugies',
     heure_debut: '11:00',
@@ -189,12 +227,13 @@ export const mockActivites: Activite[] = [
     id: 'act-07',
     titre: 'Sensibilisation au handisport',
     description:
-      "Conference-debat sur l'accessibilite dans le sport. Representation des personnes handicapees dans les medias sportifs. Animee par des athletes handisport.",
+      "Conference-debat sur l'accessibilite dans le sport et la representation des athletes handicapes dans les medias.",
     association_id: 'handisport-paris',
     association_nom: 'HandiSport Paris',
     heure_debut: '14:00',
     heure_fin: '15:00',
     lieu: 'Scene principale',
+    places_max: null,
     type: 'sensibilisation',
     publics: ['Tous publics'],
     emoji: '🎤',
@@ -218,12 +257,12 @@ export const mockActivites: Activite[] = [
     id: 'act-09',
     titre: 'Marche nordique en groupe',
     description:
-      "Balade sportive autour du parc avec batons de marche nordique. Parcours plat, rythme adapte a tous. Batons fournis.",
+      "Balade sportive avec batons de marche nordique. Parcours plat, rythme adapte a tous. Batons fournis.",
     association_id: 'cap-seniors',
     association_nom: "Cap'Seniors",
     heure_debut: '15:00',
     heure_fin: '16:30',
-    lieu: "Point de rendez-vous - entree principale",
+    lieu: "Rendez-vous - entree principale",
     places_max: 20,
     type: 'initiation',
     publics: ['Seniors 60+', 'Tous publics'],
@@ -233,12 +272,13 @@ export const mockActivites: Activite[] = [
     id: 'act-10',
     titre: "Ceremonie de cloture et remise des trophees",
     description:
-      "Cloture du festival avec remise des trophees de la diversite, discours des associations. Gouter offert a tous les participants.",
+      "Cloture du festival : trophees de la diversite, discours des associations, gouter offert a tous les participants.",
     association_id: 'sport-refugies',
     association_nom: 'Up Sport!',
     heure_debut: '17:30',
     heure_fin: '19:00',
     lieu: 'Scene principale',
+    places_max: null,
     type: 'sensibilisation',
     publics: ['Tous publics'],
     emoji: '🏆',
@@ -246,11 +286,10 @@ export const mockActivites: Activite[] = [
 ]
 
 // -------------------------------------------------------
-// INFOS PRATIQUES
+// DONNEES — INFOS PRATIQUES
 // -------------------------------------------------------
 
-export const mockInfosFestival: InfosFestival = {
-  id: 'infos',
+const infosFestival = {
   nom_lieu: 'Parc de la Villette',
   adresse: '211 Avenue Jean Jaures',
   ville: 'Paris',
@@ -279,3 +318,68 @@ export const mockInfosFestival: InfosFestival = {
     "Stationnement adapte a l'entree principale",
   ],
 }
+
+// -------------------------------------------------------
+// FONCTIONS D'INJECTION
+// -------------------------------------------------------
+
+async function seedAssociations() {
+  console.log('\n Association injection...')
+  const batch = writeBatch(db)
+  for (const asso of associations) {
+    const { id, ...data } = asso
+    batch.set(doc(collection(db, 'associations'), id), data)
+    console.log('  ok ' + asso.nom)
+  }
+  await batch.commit()
+  console.log('  -> ' + associations.length + ' associations injectees')
+}
+
+async function seedActivites() {
+  console.log('\n Activites injection...')
+  const batch = writeBatch(db)
+  for (const activite of activites) {
+    const { id, ...data } = activite
+    // Supprimer les champs null (Firestore n'aime pas null en mode strict)
+    const dataClean = Object.fromEntries(
+      Object.entries(data).filter(([, v]) => v !== null)
+    )
+    batch.set(doc(collection(db, 'activites'), id), dataClean)
+    console.log('  ok ' + activite.heure_debut + ' - ' + activite.titre)
+  }
+  await batch.commit()
+  console.log('  -> ' + activites.length + ' activites injectees')
+}
+
+async function seedConfig() {
+  console.log('\n Config injection...')
+  await setDoc(doc(db, 'config', 'infos'), infosFestival)
+  console.log('  ok /config/infos injecte')
+}
+
+// -------------------------------------------------------
+// POINT D'ENTREE
+// -------------------------------------------------------
+
+async function main() {
+  console.log("Demarrage du seed Firestore — Solimouv'")
+  console.log('Projet : ' + process.env.VITE_FIREBASE_PROJECT_ID)
+
+  try {
+    await seedAssociations()
+    await seedActivites()
+    await seedConfig()
+    console.log('\nSeed termine avec succes !')
+    console.log('Verifiez vos donnees sur https://console.firebase.google.com')
+  } catch (err) {
+    console.error('\nErreur pendant le seed :', err)
+    console.error('\nVerifiez :')
+    console.error('  1. Que .env est bien renseigne')
+    console.error('  2. Que les regles Firestore autorisent les ecritures')
+    process.exit(1)
+  }
+
+  process.exit(0)
+}
+
+main()

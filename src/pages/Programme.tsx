@@ -1,43 +1,45 @@
 /**
  * Page Programme du festival.
- * Affiche les activités triées par heure avec filtrage par créneau.
+ * Affiche les activités triées par heure de début.
  */
 
 import LoadingSpinner from '../components/LoadingSpinner'
 import { useActivites } from '../hooks/useFirestore'
-import type { Activite } from '../types'
+import type { Activite, TypeActivite } from '../types'
 import styles from './Programme.module.css'
 
 // -------------------------------------------------------
-// Fonctions utilitaires de formatage des dates
+// Utilitaires
 // -------------------------------------------------------
 
-/** Formate une date ISO en heure locale (ex: "10:00") */
-function formaterHeure(dateIso: string): string {
-  return new Date(dateIso).toLocaleTimeString('fr-FR', {
-    hour: '2-digit',
-    minute: '2-digit',
-  })
-}
-
-/** Formate une date ISO en date complète (ex: "Samedi 15 juin") */
+/** Formate une date ISO "YYYY-MM-DD" en libellé français */
 function formaterDate(dateIso: string): string {
-  return new Date(dateIso).toLocaleDateString('fr-FR', {
+  return new Date(dateIso + 'T12:00:00').toLocaleDateString('fr-FR', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
+    year: 'numeric',
   })
 }
 
-/** Retourne la couleur de badge selon le niveau */
-function couleurNiveau(niveau: Activite['niveau']): string {
-  const couleurs: Record<Activite['niveau'], string> = {
-    'Tous niveaux': styles.niveauTous,
-    Débutant: styles.niveauDebutant,
-    Intermédiaire: styles.niveauIntermediaire,
-    Avancé: styles.niveauAvance,
+/** Badge couleur selon le type d'activité */
+function classeType(type: TypeActivite): string {
+  const map: Record<TypeActivite, string> = {
+    initiation: styles.typeInitiation,
+    atelier: styles.typeAtelier,
+    sensibilisation: styles.typeSensibilisation,
   }
-  return couleurs[niveau]
+  return map[type]
+}
+
+/** Libellé affiché pour le type */
+function libelleType(type: TypeActivite): string {
+  const map: Record<TypeActivite, string> = {
+    initiation: 'Initiation',
+    atelier: 'Atelier',
+    sensibilisation: 'Sensibilisation',
+  }
+  return map[type]
 }
 
 // -------------------------------------------------------
@@ -47,14 +49,14 @@ function couleurNiveau(niveau: Activite['niveau']): string {
 function CarteActivite({ activite }: { activite: Activite }) {
   return (
     <article className={styles.carteActivite} aria-label={activite.titre}>
-      {/* Heure */}
+      {/* Colonne heure */}
       <div className={styles.carteHeure}>
-        <span className={styles.heureDebut}>{formaterHeure(activite.debut)}</span>
+        <span className={styles.heureDebut}>{activite.heure_debut}</span>
         <span className={styles.heureSeparateur}>→</span>
-        <span className={styles.heureFin}>{formaterHeure(activite.fin)}</span>
+        <span className={styles.heureFin}>{activite.heure_fin}</span>
       </div>
 
-      {/* Contenu */}
+      {/* Colonne contenu */}
       <div className={styles.carteCorps}>
         <div className={styles.carteTitreLigne}>
           {activite.emoji && (
@@ -68,26 +70,17 @@ function CarteActivite({ activite }: { activite: Activite }) {
         <p className={styles.carteDescription}>{activite.description}</p>
 
         <div className={styles.carteMeta}>
-          {/* Association */}
-          <span className={styles.metaItem}>
-            🤝 <em>{activite.association}</em>
-          </span>
-          {/* Lieu */}
-          <span className={styles.metaItem}>
-            📍 {activite.lieu}
-          </span>
-          {/* Places max */}
-          {activite.placesMax && (
-            <span className={styles.metaItem}>
-              👥 {activite.placesMax} places max
-            </span>
+          <span className={styles.metaItem}>🤝 <em>{activite.association_nom}</em></span>
+          <span className={styles.metaItem}>📍 {activite.lieu}</span>
+          {activite.places_max && (
+            <span className={styles.metaItem}>👥 {activite.places_max} places max</span>
           )}
         </div>
 
         <div className={styles.carteTags}>
-          {/* Niveau */}
-          <span className={`${styles.badge} ${couleurNiveau(activite.niveau)}`}>
-            {activite.niveau}
+          {/* Type d'activité */}
+          <span className={`${styles.badge} ${classeType(activite.type)}`}>
+            {libelleType(activite.type)}
           </span>
           {/* Publics */}
           {activite.publics.map((p) => (
@@ -108,9 +101,7 @@ function CarteActivite({ activite }: { activite: Activite }) {
 export default function Programme() {
   const { data: activites, loading, error } = useActivites()
 
-  if (loading) {
-    return <LoadingSpinner message="Chargement du programme..." />
-  }
+  if (loading) return <LoadingSpinner message="Chargement du programme..." />
 
   if (error) {
     return (
@@ -120,11 +111,6 @@ export default function Programme() {
     )
   }
 
-  // Récupérer la date du festival depuis la première activité
-  const dateFestival = activites?.[0]
-    ? formaterDate(activites[0].debut)
-    : 'Jour du festival'
-
   return (
     <main className={styles.main}>
       {/* En-tête */}
@@ -133,19 +119,19 @@ export default function Programme() {
           <span className={styles.tag}>Programme</span>
           <h1 className={styles.titre}>Programme du festival</h1>
           <p className={styles.soustitre}>
-            📅 {dateFestival} — {activites?.length ?? 0} activités au programme
+            📅 {activites?.[0] ? formaterDate('2024-06-15') : 'Jour du festival'}
+            {' — '}{activites?.length ?? 0} activités au programme
           </p>
         </div>
       </div>
 
       <div className={`${styles.conteneur} ${styles.corps}`}>
-        {/* Légende des niveaux */}
-        <div className={styles.legende} aria-label="Légende des niveaux">
-          <span className={styles.legendeLabel}>Niveaux :</span>
-          <span className={`${styles.badge} ${styles.niveauTous}`}>Tous niveaux</span>
-          <span className={`${styles.badge} ${styles.niveauDebutant}`}>Débutant</span>
-          <span className={`${styles.badge} ${styles.niveauIntermediaire}`}>Intermédiaire</span>
-          <span className={`${styles.badge} ${styles.niveauAvance}`}>Avancé</span>
+        {/* Légende des types */}
+        <div className={styles.legende} aria-label="Légende des types d'activité">
+          <span className={styles.legendeLabel}>Types :</span>
+          <span className={`${styles.badge} ${styles.typeInitiation}`}>Initiation</span>
+          <span className={`${styles.badge} ${styles.typeAtelier}`}>Atelier</span>
+          <span className={`${styles.badge} ${styles.typeSensibilisation}`}>Sensibilisation</span>
         </div>
 
         {/* Liste des activités */}

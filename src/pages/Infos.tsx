@@ -1,6 +1,6 @@
 /**
  * Page Infos Pratiques du festival.
- * Affiche lieu, accès, transports, accessibilité et contact.
+ * Affiche lieu, transports, accessibilité et contact.
  */
 
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -11,9 +11,7 @@ import styles from './Infos.module.css'
 export default function Infos() {
   const { data: infos, loading, error } = useInfosFestival()
 
-  if (loading) {
-    return <LoadingSpinner message="Chargement des informations..." />
-  }
+  if (loading) return <LoadingSpinner message="Chargement des informations..." />
 
   if (error || !infos) {
     return (
@@ -23,8 +21,7 @@ export default function Infos() {
     )
   }
 
-  // Formater les dates du festival
-  const dateDebut = new Date(infos.dateDebut).toLocaleDateString('fr-FR', {
+  const dateFestival = new Date(infos.date_festival + 'T12:00:00').toLocaleDateString('fr-FR', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
@@ -38,7 +35,7 @@ export default function Infos() {
         <div className={styles.conteneur}>
           <span className={styles.tag}>Infos pratiques</span>
           <h1 className={styles.titre}>Tout savoir pour venir</h1>
-          <p className={styles.soustitre}>{dateDebut}</p>
+          <p className={styles.soustitre} style={{ textTransform: 'capitalize' }}>{dateFestival}</p>
         </div>
       </div>
 
@@ -52,14 +49,14 @@ export default function Infos() {
               <h2 id="titre-lieu" className={styles.carteTitre}>Lieu</h2>
             </div>
             <div className={styles.carteCorps}>
-              <p className={styles.lieuNom}>{infos.nomLieu}</p>
+              <p className={styles.lieuNom}>{infos.nom_lieu}</p>
               <p className={styles.lieuAdresse}>
                 {infos.adresse}<br />
-                {infos.codePostal} {infos.ville}
+                {infos.code_postal} {infos.ville}
               </p>
               <p className={styles.lieuHoraires}>🕐 {infos.horaires}</p>
-              {infos.lienCarte && (
-                <Button as="externe" href={infos.lienCarte} variante="primaire">
+              {infos.lien_carte && (
+                <Button as="externe" href={infos.lien_carte} variante="primaire">
                   📱 Ouvrir dans Google Maps
                 </Button>
               )}
@@ -74,7 +71,7 @@ export default function Infos() {
             </div>
             <div className={styles.carteCorps}>
               <ul className={styles.listeTransports} role="list">
-                {infos.transportsCommun.map((transport, i) => (
+                {infos.acces_transports.map((transport, i) => (
                   <li key={i} className={styles.transportItem}>
                     <span className={styles.transportPuce}>•</span>
                     {transport}
@@ -116,35 +113,27 @@ export default function Infos() {
               <div className={styles.contactListe}>
                 <div className={styles.contactItem}>
                   <span className={styles.contactLabel}>Email</span>
-                  <a href={`mailto:${infos.emailContact}`} className={styles.contactValeur}>
-                    {infos.emailContact}
+                  <a href={`mailto:${infos.email_contact}`} className={styles.contactValeur}>
+                    {infos.email_contact}
                   </a>
                 </div>
-
-                {infos.telephoneContact && (
+                {infos.tel_contact && (
                   <div className={styles.contactItem}>
                     <span className={styles.contactLabel}>Téléphone</span>
-                    <a href={`tel:${infos.telephoneContact}`} className={styles.contactValeur}>
-                      {infos.telephoneContact}
+                    <a href={`tel:${infos.tel_contact}`} className={styles.contactValeur}>
+                      {infos.tel_contact}
                     </a>
                   </div>
                 )}
-
                 {infos.siteWeb && (
                   <div className={styles.contactItem}>
                     <span className={styles.contactLabel}>Site web</span>
-                    <a
-                      href={infos.siteWeb}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.contactValeur}
-                    >
+                    <a href={infos.siteWeb} target="_blank" rel="noopener noreferrer" className={styles.contactValeur}>
                       {infos.siteWeb.replace('https://', '')}
                     </a>
                   </div>
                 )}
               </div>
-
               <p className={styles.contactNote}>
                 Pour toute question sur le festival ou les activités, n'hésitez pas à nous contacter.
                 Nous répondons sous 48h.
@@ -154,16 +143,15 @@ export default function Infos() {
 
         </div>
 
-        {/* Carte intégrée (iframe Google Maps statique) */}
+        {/* Section carte / plan */}
         <section className={styles.sectionCarte} aria-labelledby="titre-carte">
           <h2 id="titre-carte" className={styles.titreCarte}>Où nous trouver ?</h2>
           <div className={styles.carteIframe}>
-            {/* Remplacement de la carte : lien textuel accessible */}
             <div className={styles.carteIframeInfo}>
-              <p>📍 <strong>{infos.nomLieu}</strong></p>
-              <p>{infos.adresse}, {infos.codePostal} {infos.ville}</p>
-              {infos.lienCarte && (
-                <Button as="externe" href={infos.lienCarte} variante="secondaire">
+              <p>📍 <strong>{infos.nom_lieu}</strong></p>
+              <p>{infos.adresse}, {infos.code_postal} {infos.ville}</p>
+              {infos.lien_carte && (
+                <Button as="externe" href={infos.lien_carte} variante="secondaire">
                   Ouvrir la carte
                 </Button>
               )}

@@ -1,6 +1,6 @@
 /**
  * Types TypeScript centralisés pour l'application Solimouv'
- * Tous les types qui reflètent la structure Firestore sont définis ici.
+ * Les noms de champs correspondent exactement aux champs Firestore (snake_case).
  */
 
 // -------------------------------------------------------
@@ -19,36 +19,43 @@ export interface Association {
   disciplines: string[]
   /** Publics cibles (ex: "seniors", "réfugiés", "handicap") */
   publics: string[]
+  /** URL du logo (placeholder ou Firestore Storage) */
+  logo?: string
   siteWeb?: string
-  logoUrl?: string
   email?: string
-  telephone?: string
+  /** Ordre d'affichage dans la liste */
+  ordre: number
 }
 
 // -------------------------------------------------------
-// PROGRAMME / ACTIVITÉS
+// ACTIVITÉS
 // -------------------------------------------------------
 
+/** Type d'activité proposée */
+export type TypeActivite = 'initiation' | 'atelier' | 'sensibilisation'
+
 /**
- * Une activité ou un créneau du programme du festival
+ * Une activité du programme du festival
  * Collection Firestore : /activites
  */
 export interface Activite {
   id: string
   titre: string
   description: string
-  /** Nom de l'association qui anime l'activité */
-  association: string
-  /** Date et heure de début (timestamp ISO string) */
-  debut: string
-  /** Date et heure de fin (timestamp ISO string) */
-  fin: string
+  /** ID du document de l'association dans /associations */
+  association_id: string
+  /** Nom de l'association (dénormalisé pour éviter des jointures) */
+  association_nom: string
+  /** Heure de début au format "HH:MM" */
+  heure_debut: string
+  /** Heure de fin au format "HH:MM" */
+  heure_fin: string
   /** Lieu précis dans le festival (ex: "Terrain A", "Gymnase") */
   lieu: string
-  /** Nombre de places disponibles (undefined = illimité) */
-  placesMax?: number
-  /** Niveau requis */
-  niveau: 'Tous niveaux' | 'Débutant' | 'Intermédiaire' | 'Avancé'
+  /** Nombre de places max (undefined = illimité) */
+  places_max?: number
+  /** Type d'activité */
+  type: TypeActivite
   /** Publics cibles */
   publics: string[]
   /** Icône emoji représentant l'activité */
@@ -65,28 +72,23 @@ export interface Activite {
  */
 export interface InfosFestival {
   id: string
-  nomLieu: string
+  nom_lieu: string
   adresse: string
   ville: string
-  codePostal: string
-  /** Coordonnées GPS pour l'intégration carte */
+  code_postal: string
+  /** Coordonnées GPS */
   latitude?: number
   longitude?: number
-  /** Lignes de métro/RER/bus à proximité */
-  transportsCommun: string[]
-  /** Lien Google Maps ou Apple Maps */
-  lienCarte?: string
-  /** Date de début du festival (ISO string) */
-  dateDebut: string
-  /** Date de fin du festival (ISO string) */
-  dateFin: string
-  /** Horaires d'ouverture */
+  /** Lignes de transport en commun */
+  acces_transports: string[]
+  /** Lien vers Google Maps */
+  lien_carte?: string
+  /** Date du festival au format ISO "YYYY-MM-DD" */
+  date_festival: string
+  /** Horaires d'ouverture en texte libre */
   horaires: string
-  /** Email de contact */
-  emailContact: string
-  /** Numéro de téléphone de contact */
-  telephoneContact?: string
-  /** URL du site web Up Sport! */
+  email_contact: string
+  tel_contact?: string
   siteWeb?: string
   /** Informations d'accessibilité */
   accessibilite: string[]
