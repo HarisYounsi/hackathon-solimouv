@@ -1,5 +1,5 @@
 /* ============================================================
-   Accueil — Mobile First (Figma design)
+   Accueil — Mobile First (Figma design, node 99:31 / 113:1876)
    ============================================================ */
 
 .page {
@@ -12,8 +12,12 @@
   padding: 24px 16px;
 }
 
-.sectionHeader {
+.sectionHeaderRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   margin-bottom: 16px;
+  gap: 8px;
 }
 
 .sectionSubtitle {
@@ -33,6 +37,21 @@
   text-underline-offset: 3px;
   margin: 0;
   line-height: 1.2;
+}
+
+.voirPlusLink {
+  font-family: var(--font-titre);
+  font-size: 14px;
+  font-weight: 300;
+  color: #1e1e1e;
+  text-decoration: none;
+  white-space: nowrap;
+  padding-top: 3px;
+  flex-shrink: 0;
+}
+
+.voirPlusLink:hover {
+  text-decoration: underline;
 }
 
 .vide {
@@ -102,7 +121,7 @@
 .heroAthlete {
   position: absolute;
   top: 20px;
-  right: -40px;
+  right: -30px;
   height: 380px;
   width: auto;
   object-fit: cover;
@@ -122,7 +141,7 @@
   pointer-events: none;
 }
 
-/* Logo */
+/* Logo centré */
 .heroLogoWrap {
   position: relative;
   z-index: 3;
@@ -136,7 +155,7 @@
   width: auto;
 }
 
-/* Texte principal */
+/* Contenu textuel */
 .heroContent {
   position: relative;
   z-index: 3;
@@ -149,7 +168,6 @@
   font-size: 36px;
   font-weight: 800;
   line-height: 0.9;
-  color: var(--bleu-primaire);
   margin: 0 0 12px;
 }
 
@@ -158,12 +176,14 @@
   font-weight: 800;
 }
 
-.heroTitreScript {
+/* "au Solimouv" — vert Caveat comme sur le Figma */
+.heroTitreVert {
   font-family: var(--font-script);
   font-size: 48px;
   font-weight: 700;
-  color: var(--bleu-primaire);
+  color: var(--vert-cta);
   line-height: 0.9;
+  display: block;
 }
 
 .heroDesc {
@@ -183,7 +203,7 @@
   font-size: 15px;
   font-weight: 700;
   padding: 12px 20px;
-  border-radius: 6px;
+  border-radius: 4px;
   text-decoration: none;
   line-height: 1;
   transition: opacity 0.15s ease;
@@ -205,7 +225,7 @@
 }
 
 /* ══════════════════════════════════════════
-   2. SPORTS — Carousel de carrés bordurés
+   2. SPORTS — Carrousel de carrés bordurés bleus
 ══════════════════════════════════════════ */
 .sportCarousel {
   display: flex;
@@ -215,7 +235,6 @@
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  margin-top: 16px;
 }
 
 .sportCarousel::-webkit-scrollbar {
@@ -231,12 +250,12 @@
   gap: 8px;
 }
 
-/* Carré bordé bleu */
+/* Carré avec bordure bleue — exactement comme le Figma (node 90:583) */
 .sportBox {
-  width: 64px;
-  height: 64px;
-  border: 2px solid var(--bleu-primaire);
-  border-radius: 10px;
+  width: 60px;
+  height: 60px;
+  border: 1.7px solid var(--bleu-primaire);
+  border-radius: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -244,8 +263,8 @@
 }
 
 .sportIcon {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   object-fit: contain;
 }
 
@@ -279,46 +298,62 @@
   scroll-snap-align: start;
 }
 
-/* Card activité */
+/* Card activité — node 99:173 */
 .progCard {
   position: relative;
-  width: 280px;
-  height: 200px;
+  width: 315px;
+  height: 224px;
   background: #ffffff;
-  border: 2px solid #f8f5fc;
+  border: 2px solid #ffffff;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 -2px 9px rgba(0,0,0,0.15);
 }
 
 .progCardWave {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.15;
+  top: 50%;
+  right: -80px;
+  height: 180%;
+  width: auto;
+  transform: translateY(-50%);
+  opacity: 0.18;
   pointer-events: none;
+  z-index: 0;
 }
 
 .progCardPerson {
   position: absolute;
   top: 0;
-  right: -10px;
-  height: 110%;
+  right: -5px;
+  height: 115%;
   width: auto;
   object-fit: cover;
   pointer-events: none;
-  opacity: 0.6;
+  z-index: 1;
+}
+
+/* Dégradé blanc sur la moitié droite */
+.progCard::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 55%;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.85) 100%);
+  z-index: 2;
+  pointer-events: none;
 }
 
 .progCardContent {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   padding: 14px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 180px;
+  max-width: 170px;
 }
 
 .progCardHeader {
@@ -360,7 +395,6 @@
   gap: 6px;
   font-size: 13px;
   color: #1e1e1e;
-  font-weight: 400;
 }
 
 .progCardMetaItem img {
@@ -386,42 +420,36 @@
 }
 
 /* ══════════════════════════════════════════
-   4. CARTE — statique Figma
+   4. CARTE — statique Figma (node 99:50)
 ══════════════════════════════════════════ */
 .carteTitleRow {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 16px;
+  gap: 8px;
 }
 
-.voirPlus {
-  font-family: var(--font-titre);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--bleu-primaire);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  white-space: nowrap;
-  margin-top: 4px;
-}
-
-/* Conteneur de la carte statique */
+/* Conteneur visible : 396×294 avec overflow hidden */
 .mapContainer {
-  border-radius: 12px;
+  border: 2px solid #ffffff;
+  border-radius: 8px;
   overflow: hidden;
   width: 100%;
   aspect-ratio: 396 / 294;
   position: relative;
-  background: linear-gradient(135deg, #c3cdf7 0%, #b0bef5 40%, #8fa6f0 100%);
+  background: #c3d0f5;
 }
 
+/* Frame interne 600×600 avec dégradé Figma exact */
 .mapFrame {
   position: absolute;
   left: -104px;
   top: -214px;
   width: 600px;
   height: 600px;
+  overflow: clip;
+  background: linear-gradient(164.14deg, #ffffff 14.913%, #3b53cd 100%);
 }
 
 .mapLayer {
@@ -439,8 +467,8 @@
 
 .mapMarker {
   position: absolute;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
@@ -449,15 +477,15 @@
 
 .markerOuter {
   position: absolute;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   object-fit: contain;
 }
 
 .markerInnerImg {
   position: absolute;
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
 }
 
@@ -465,17 +493,17 @@
   position: relative;
   z-index: 2;
   font-family: var(--font-titre);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
-  color: #ffffff;
+  color: #1e1e1e;
   line-height: 1;
 }
 
 .mapLabel {
   position: absolute;
-  font-size: 10px;
-  font-weight: 600;
-  color: #4b5563;
+  font-size: 9px;
+  font-weight: 700;
+  color: #6b6b6b;
   white-space: nowrap;
   letter-spacing: 0.01em;
 }
@@ -495,7 +523,7 @@
   padding: 8px 14px;
   font-family: var(--font-titre);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   color: #1e1e1e;
   background: #ffffff;
   text-decoration: none;
@@ -510,27 +538,32 @@
   font-family: var(--font-script);
   font-size: 18px;
   font-weight: 700;
+  line-height: 1;
 }
 
 /* ══════════════════════════════════════════
-   5. ASSOCIATIONS — Carousel
+   5. ASSOCIATIONS — Carousel + cards
 ══════════════════════════════════════════ */
 .assoCard {
-  width: 220px;
-  min-height: 260px;
+  width: 234px;
+  height: 286px;
   background: #ffffff;
-  border: 2px solid #f8f5fc;
+  border: 2px solid #ffffff;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
-/* Fond vague coloré */
-.assoCardBg {
+/* Vague décorative en haut à droite */
+.assoCardWave {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(160deg, #f0f3ff 0%, #e8edff 60%, #ffffff 100%);
+  top: -20px;
+  right: -60px;
+  width: 220px;
+  height: auto;
+  opacity: 0.85;
+  pointer-events: none;
   z-index: 0;
 }
 
@@ -540,12 +573,14 @@
   padding: 16px 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .assoCardNom {
   font-family: var(--font-titre);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 800;
   color: #1e1e1e;
   margin: 0;
@@ -554,15 +589,16 @@
 
 .assoCardScript {
   font-family: var(--font-script);
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
   color: #1e1e1e;
   display: block;
+  line-height: 1;
 }
 
 .assoCardNomSuite {
   font-family: var(--font-titre);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 800;
 }
 
@@ -574,71 +610,72 @@
   margin: 0;
 }
 
-/* Dégradé avant le texte description */
-.assoCardFade {
-  height: 12px;
-  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.6));
-  pointer-events: none;
-}
-
 .assoCardDesc {
-  font-size: 13px;
-  color: #4b5563;
-  line-height: 1.5;
+  font-size: 14px;
+  color: #1e1e1e;
+  line-height: 1.4;
   margin: 0;
+  flex: 1;
+  overflow: hidden;
 }
 
 /* ══════════════════════════════════════════
-   6. CTA FINAL — grande fleur verte
+   6. CTA FINAL — grande fleur blob verte (node 113:1876)
 ══════════════════════════════════════════ */
 .ctaFinal {
-  padding: 48px 16px 56px;
+  padding: 60px 16px 72px;
   position: relative;
   overflow: hidden;
   background: #ffffff;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Grosse fleur verte en fond */
+/* Grosse fleur verte qui remplit le fond */
 .ctaBigFlower {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 340px;
+  width: 420px;
   height: auto;
   pointer-events: none;
   z-index: 0;
-  opacity: 1;
 }
 
 .ctaFinalContent {
   position: relative;
   z-index: 1;
   text-align: center;
+  max-width: 300px;
 }
 
 .ctaFinalTitre {
   font-family: var(--font-titre);
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 900;
   color: #1e1e1e;
   line-height: 1.1;
-  margin: 0 0 12px;
+  margin: 0 0 4px;
 }
 
+/* "sur la touche !" en blanc sur la fleur verte */
 .ctaFinalScript {
   font-family: var(--font-script);
   font-size: 44px;
   font-weight: 700;
-  color: #1e1e1e;
+  color: #ffffff;
   display: block;
+  line-height: 1;
 }
 
 .ctaFinalSub {
   font-size: 15px;
   color: #1e1e1e;
-  margin: 0 0 24px;
-  opacity: 0.8;
+  margin: 12px 0 24px;
+  line-height: 1.3;
 }
 
 .ctaFinalBtn {
@@ -649,7 +686,7 @@
   font-size: 16px;
   font-weight: 700;
   padding: 14px 32px;
-  border-radius: 6px;
+  border-radius: 4px;
   text-decoration: none;
   transition: opacity 0.15s ease;
 }
@@ -659,7 +696,7 @@
 }
 
 /* ══════════════════════════════════════════
-   RESPONSIVE — Desktop (≥768px)
+   RESPONSIVE — Desktop ≥ 768px
 ══════════════════════════════════════════ */
 @media (min-width: 768px) {
 
@@ -677,7 +714,7 @@
     font-size: 48px;
   }
 
-  .heroTitreScript {
+  .heroTitreVert {
     font-size: 64px;
   }
 
@@ -698,7 +735,14 @@
     font-size: 26px;
   }
 
-  /* Sports — carrousel agrandi */
+  /* Sport — ligne unique visible, pas de scroll */
+  .sportCarousel {
+    overflow-x: visible;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-bottom: 8px;
+  }
+
   .sportBox {
     width: 80px;
     height: 80px;
@@ -709,31 +753,54 @@
     height: 44px;
   }
 
+  /* Associations — grille 3 colonnes */
+  .carouselAsso {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow-x: visible;
+    padding: 8px 0 16px;
+  }
+
+  .carouselAsso .carouselItem {
+    width: 100%;
+  }
+
+  .carouselAsso .assoCard {
+    width: 100%;
+    height: auto;
+    min-height: 260px;
+  }
+
   /* Carte */
   .mapContainer {
     max-width: 500px;
   }
 
-  /* CTA final */
+  /* CTA */
   .ctaFinal {
     padding: 80px 40px;
-  }
-
-  .ctaFinalTitre {
-    font-size: 48px;
-  }
-
-  .ctaFinalScript {
-    font-size: 64px;
+    min-height: 380px;
   }
 
   .ctaBigFlower {
-    width: 480px;
+    width: 560px;
+  }
+
+  .ctaFinalTitre {
+    font-size: 40px;
+  }
+
+  .ctaFinalScript {
+    font-size: 58px;
   }
 }
 
 @media (min-width: 1024px) {
   .section {
     padding: 48px 80px;
+  }
+
+  .carouselAsso {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
