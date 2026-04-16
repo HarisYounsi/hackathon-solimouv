@@ -22,9 +22,10 @@ dist-ssr
 # Firebase
 .firebase/
 
-# PWA générés
-public/sw.js
-public/workbox-*.js
+# PWA générés (build + dev)
+dist/sw.js
+dist/workbox-*.js
+dev-dist/
 
 # Editor directories and files
 .vscode/*
