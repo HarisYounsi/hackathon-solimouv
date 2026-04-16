@@ -1,272 +1,655 @@
-/* Page d'accueil - mobile first */
+/* ============================================================
+   Accueil — Mobile First (Figma design)
+   ============================================================ */
 
-.main {
-  min-height: 100vh;
+.page {
+  background: #fff;
+  overflow-x: hidden;
 }
 
-/* ---- HERO ---- */
+/* ── Sections communes ── */
+.section {
+  padding: 24px 16px;
+}
+
+.sectionHeader {
+  margin-bottom: 16px;
+}
+
+.sectionSubtitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: #1e1e1e;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.titreSouligné {
+  font-family: var(--font-titre);
+  font-size: 20px;
+  font-weight: 900;
+  color: #1e1e1e;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.vide {
+  font-size: 14px;
+  color: #9ca3af;
+  padding: 16px 0;
+}
+
+/* ══════════════════════════════════════════
+   1. HERO
+══════════════════════════════════════════ */
 .hero {
-  background: linear-gradient(135deg, var(--couleur-primaire) 0%, var(--couleur-accent) 100%);
-  color: white;
-  padding: var(--espacement-xl) var(--espacement-md);
-  min-height: 60vh;
+  position: relative;
+  min-height: 445px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* Fleurs décoratives */
+.flowerTopRight {
+  position: absolute;
+  top: -40px;
+  right: -60px;
+  width: 260px;
+  height: auto;
+  transform: rotate(165deg);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.flowerTopLeft {
+  position: absolute;
+  top: -60px;
+  left: -20px;
+  width: 180px;
+  height: auto;
+  transform: rotate(-58deg);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+.flowerBottomLeft {
+  position: absolute;
+  bottom: 40px;
+  left: -60px;
+  width: 200px;
+  height: auto;
+  transform: rotate(-105deg);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.flowerRight {
+  position: absolute;
+  bottom: 80px;
+  right: -40px;
+  width: 160px;
+  height: auto;
+  transform: rotate(-135deg);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* Photo du sportif */
+.heroAthlete {
+  position: absolute;
+  top: 20px;
+  right: -40px;
+  height: 380px;
+  width: auto;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Dégradé vers blanc en bas */
+.heroFade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffffff 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Logo */
+.heroLogoWrap {
+  position: relative;
+  z-index: 3;
+  padding: 20px 16px 0;
   display: flex;
-  align-items: center;
+  justify-content: center;
 }
 
-.heroContenu {
-  max-width: var(--largeur-max);
-  margin: 0 auto;
-  width: 100%;
+.heroLogo {
+  height: 30px;
+  width: auto;
 }
 
-.heroTag {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 4px 14px;
-  border-radius: 20px;
-  margin-bottom: var(--espacement-md);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+/* Texte principal */
+.heroContent {
+  position: relative;
+  z-index: 3;
+  padding: 16px 16px 24px;
+  max-width: 260px;
 }
 
 .heroTitre {
-  font-size: clamp(3rem, 10vw, 6rem);
-  font-weight: 900;
-  margin: 0 0 var(--espacement-sm);
+  font-family: var(--font-titre);
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 0.9;
+  color: var(--bleu-primaire);
+  margin: 0 0 12px;
+}
+
+.heroTitreBleu {
+  color: var(--bleu-primaire);
+  font-weight: 800;
+}
+
+.heroTitreScript {
+  font-family: var(--font-script);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--bleu-primaire);
+  line-height: 0.9;
+}
+
+.heroDesc {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #1e1e1e;
+  margin: 0 0 20px;
+}
+
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  background: var(--orange-cta);
+  color: #ffffff;
+  font-family: var(--font-titre);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 6px;
+  text-decoration: none;
   line-height: 1;
-  letter-spacing: -0.02em;
+  transition: opacity 0.15s ease;
 }
 
-.heroAccent {
-  color: var(--couleur-secondaire);
+.heroCta:hover {
+  opacity: 0.88;
 }
 
-.heroSoustitre {
-  font-size: clamp(1.1rem, 3vw, 1.5rem);
-  font-weight: 300;
-  margin: 0 0 var(--espacement-md);
-  opacity: 0.9;
+/* Mascotte (petite icone en bas) */
+.heroMascot {
+  position: absolute;
+  bottom: 50px;
+  right: 10px;
+  width: 48px;
+  height: auto;
+  z-index: 3;
+  pointer-events: none;
 }
 
-.heroDescription {
-  font-size: 1rem;
-  max-width: 600px;
-  line-height: 1.7;
-  margin: 0 0 var(--espacement-lg);
-  opacity: 0.85;
-}
-
-.heroBoutons {
+/* ══════════════════════════════════════════
+   2. SPORTS
+══════════════════════════════════════════ */
+.sportGrid {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--espacement-sm);
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 16px;
 }
 
-/* ---- SECTIONS COMMUNES ---- */
-.section {
-  padding: var(--espacement-xl) var(--espacement-md);
-}
-
-.sectionAlt {
-  background-color: var(--couleur-fond-alt);
-}
-
-.conteneur {
-  max-width: var(--largeur-max);
-  margin: 0 auto;
-}
-
-.titreSection {
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: var(--couleur-texte);
-  margin: 0 0 var(--espacement-md);
-  line-height: 1.2;
-}
-
-.titreSectionCentre {
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: var(--couleur-texte);
-  margin: 0 0 var(--espacement-lg);
-  text-align: center;
-  line-height: 1.2;
-}
-
-/* ---- CHIFFRES CLÉS ---- */
-.grilleChiffres {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--espacement-md);
-}
-
-.carteChiffre {
-  background: white;
-  border-radius: var(--rayon-lg);
-  padding: var(--espacement-md);
-  text-align: center;
-  box-shadow: var(--ombre-carte);
+.sportItem {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
+  flex: 1;
 }
 
-.chiffreEmoji {
-  font-size: 2rem;
-  line-height: 1;
-}
-
-.chiffreValeur {
-  font-size: 1.75rem;
-  font-weight: 900;
-  color: var(--couleur-primaire);
-  line-height: 1.1;
-}
-
-.chiffreLabel {
-  font-size: 0.8rem;
-  color: var(--couleur-texte-leger);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* ---- VALEURS ---- */
-.grilleValeurs {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--espacement-md);
-}
-
-.carteValeur {
-  background: white;
-  border-radius: var(--rayon-lg);
-  padding: var(--espacement-md);
-  box-shadow: var(--ombre-carte);
+.sportFlower {
+  position: relative;
+  width: 64px;
+  height: 64px;
   display: flex;
-  align-items: flex-start;
-  gap: var(--espacement-md);
+  align-items: center;
+  justify-content: center;
 }
 
-.valeurEmoji {
-  font-size: 2rem;
+.sportFlowerImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sportIconImg {
+  position: relative;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.sportLabel {
+  font-family: var(--font-titre);
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e1e1e;
+  text-align: center;
+}
+
+/* ══════════════════════════════════════════
+   3. PROGRAMME — Carousel
+══════════════════════════════════════════ */
+.carousel {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 8px 0 16px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carouselItem {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+/* Card activité */
+.progCard {
+  position: relative;
+  width: 280px;
+  height: 200px;
+  background: #ffffff;
+  border: 2px solid #f8f5fc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progCardWave {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.progCardPerson {
+  position: absolute;
+  top: 0;
+  right: -10px;
+  height: 110%;
+  width: auto;
+  object-fit: cover;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.progCardContent {
+  position: relative;
+  z-index: 1;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 180px;
+}
+
+.progCardHeader {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.progCardEmoji {
+  font-size: 22px;
+  line-height: 1;
   flex-shrink: 0;
 }
 
-.valeurTitre {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--couleur-texte);
-  margin: 0 0 4px;
-}
-
-.valeurDescription {
-  font-size: 0.9rem;
-  color: var(--couleur-texte-leger);
-  margin: 0;
-  line-height: 1.5;
-}
-
-/* ---- À PROPOS ---- */
-.apropos {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--espacement-xl);
-  align-items: center;
-}
-
-.aproposTag {
-  display: inline-block;
-  color: var(--couleur-accent);
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: var(--espacement-sm);
-}
-
-.aproposTexte {
-  display: flex;
-  flex-direction: column;
-  gap: var(--espacement-sm);
-}
-
-.aproposTexte p {
-  color: var(--couleur-texte-leger);
-  line-height: 1.7;
-  margin: 0;
-}
-
-.aproposVisuel {
-  display: flex;
-  justify-content: center;
-}
-
-.emojiGrille {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--espacement-md);
-  font-size: 3rem;
-  text-align: center;
-  background: var(--couleur-fond-alt);
-  border-radius: var(--rayon-lg);
-  padding: var(--espacement-lg);
-}
-
-/* ---- CTA ---- */
-.sectionCta {
-  background: linear-gradient(135deg, var(--couleur-primaire), var(--couleur-accent));
-  color: white;
-}
-
-.cta {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--espacement-md);
-}
-
-.cta h2 {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
+.progCardTitre {
+  font-family: var(--font-titre);
+  font-size: 16px;
   font-weight: 800;
+  color: #1e1e1e;
   margin: 0;
-  color: white;
+  line-height: 1.2;
 }
 
-.cta p {
-  font-size: 1.05rem;
-  opacity: 0.9;
-  margin: 0;
+.progCardAsso {
+  font-size: 13px;
+  color: #4b5563;
+  margin: 2px 0 0;
 }
 
-.ctaBoutons {
+.progCardMeta {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--espacement-sm);
-  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
 }
 
-/* ---- RESPONSIVE DESKTOP ---- */
+.progCardMetaItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #1e1e1e;
+  font-weight: 400;
+}
+
+.progCardMetaItem img {
+  flex-shrink: 0;
+}
+
+.progCardTags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  display: inline-block;
+  border: 1px solid var(--bordure-tag);
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-size: 13px;
+  color: #1e1e1e;
+  background: #ffffff;
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* ══════════════════════════════════════════
+   4. CARTE
+══════════════════════════════════════════ */
+.carteEmbed {
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 240px;
+  margin-top: 12px;
+}
+
+.carteIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.carteCta {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.btnOutline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 2px solid var(--bordure-asso);
+  border-radius: 4px;
+  padding: 8px 14px;
+  font-family: var(--font-titre);
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e1e1e;
+  background: #ffffff;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.btnOutline:hover {
+  background: #fef2f0;
+}
+
+/* ══════════════════════════════════════════
+   5. ASSOCIATIONS — Carousel
+══════════════════════════════════════════ */
+.assoCard {
+  width: 220px;
+  min-height: 260px;
+  background: #ffffff;
+  border: 2px solid #f8f5fc;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.assoCardContent {
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.assoCardNom {
+  font-family: var(--font-titre);
+  font-size: 18px;
+  font-weight: 800;
+  color: #1e1e1e;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.assoCardScript {
+  font-family: var(--font-script);
+  font-size: 26px;
+  font-weight: 700;
+  color: #1e1e1e;
+  display: block;
+}
+
+.assoCardNomSuite {
+  font-family: var(--font-titre);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.assoCardSoustitre {
+  font-family: var(--font-titre);
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e1e1e;
+  margin: 0;
+}
+
+.assoCardDesc {
+  font-size: 13px;
+  color: #4b5563;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ══════════════════════════════════════════
+   6. CTA FINAL — fond vert
+══════════════════════════════════════════ */
+.ctaFinal {
+  background: var(--vert-cta);
+  padding: 48px 16px 56px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaFlower {
+  position: absolute;
+  top: -30px;
+  right: -40px;
+  width: 180px;
+  opacity: 0.25;
+  pointer-events: none;
+  transform: rotate(30deg);
+}
+
+.ctaFinalContent {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.ctaFinalTitre {
+  font-family: var(--font-titre);
+  font-size: 32px;
+  font-weight: 900;
+  color: #1e1e1e;
+  line-height: 1.1;
+  margin: 0 0 12px;
+}
+
+.ctaFinalScript {
+  font-family: var(--font-script);
+  font-size: 44px;
+  font-weight: 700;
+  color: #1e1e1e;
+  display: block;
+}
+
+.ctaFinalSub {
+  font-size: 15px;
+  color: #1e1e1e;
+  margin: 0 0 24px;
+  opacity: 0.8;
+}
+
+.ctaFinalBtn {
+  display: inline-block;
+  background: var(--orange-cta);
+  color: #ffffff;
+  font-family: var(--font-titre);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.ctaFinalBtn:hover {
+  opacity: 0.88;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — Desktop (max 1200px)
+══════════════════════════════════════════ */
 @media (min-width: 768px) {
+
+  /* Hero */
   .hero {
-    padding: calc(var(--espacement-xl) * 2) var(--espacement-md);
-    min-height: 70vh;
+    min-height: 500px;
   }
 
-  .grilleChiffres {
-    grid-template-columns: repeat(4, 1fr);
+  .heroContent {
+    max-width: 380px;
+    padding: 24px 40px 40px;
   }
 
-  .grilleValeurs {
-    grid-template-columns: repeat(2, 1fr);
+  .heroTitre {
+    font-size: 48px;
   }
 
-  .apropos {
-    grid-template-columns: 1fr 1fr;
+  .heroTitreScript {
+    font-size: 64px;
+  }
+
+  .heroAthlete {
+    right: 40px;
+    height: 480px;
+    top: 10px;
+  }
+
+  /* Sections */
+  .section {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .titreSouligné {
+    font-size: 26px;
+  }
+
+  /* Sports */
+  .sportGrid {
+    justify-content: flex-start;
+    gap: 32px;
+  }
+
+  .sportItem {
+    flex: 0 0 auto;
+  }
+
+  .sportFlower {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* Carousel */
+  .carousel {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    overflow-x: unset;
+    padding: 0;
+  }
+
+  .carouselItem {
+    width: 100%;
+  }
+
+  .progCard {
+    width: 100%;
+  }
+
+  .assoCard {
+    width: 100%;
+    min-height: 200px;
+  }
+
+  /* Carte */
+  .carteEmbed {
+    height: 360px;
+  }
+
+  /* CTA final */
+  .ctaFinal {
+    padding: 80px 40px;
+  }
+
+  .ctaFinalTitre {
+    font-size: 48px;
+  }
+
+  .ctaFinalScript {
+    font-size: 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 48px 80px;
   }
 }

@@ -1,5 +1,12 @@
 /* Navbar principale - mobile first */
 
+/* Cachée sur mobile : la NavbarBottom prend le relai */
+@media (max-width: 767px) {
+  .header {
+    display: none;
+  }
+}
+
 .header {
   background-color: var(--couleur-primaire);
   color: white;

@@ -1,0 +1,335 @@
+/* ============================================================
+   Carte — Mobile First (Figma design)
+   ============================================================ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: #fff;
+  position: relative;
+}
+
+/* ── En-tête flottant ── */
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: 16px 16px 12px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.95) 70%, rgba(255,255,255,0));
+}
+
+.headerTitre {
+  font-family: var(--font-titre);
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--bleu-primaire);
+  margin: 0 0 2px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.headerSub {
+  font-size: 13px;
+  color: #4b5563;
+  margin: 0;
+}
+
+/* ── Carte Google Maps ── */
+.mapWrap {
+  position: relative;
+  flex: 1;
+  min-height: 320px;
+}
+
+.mapIframe {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  border: none;
+  display: block;
+}
+
+/* ── Markers numérotés ── */
+.markers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.marker {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  border: 2px solid #1e1e1e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: all;
+  transition: background 0.15s, transform 0.15s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+}
+
+.marker:hover,
+.markerActif {
+  background: var(--bleu-primaire);
+  border-color: var(--bleu-primaire);
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.markerInner {
+  font-family: var(--font-titre);
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e1e1e;
+  line-height: 1;
+}
+
+.markerActif .markerInner {
+  color: #ffffff;
+}
+
+/* ── Drawer détail ── */
+.drawer {
+  position: fixed;
+  bottom: 80px; /* au-dessus de la navbar bottom */
+  left: 16px;
+  right: 16px;
+  z-index: 50;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px 16px;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.14);
+  border: 1px solid #f0f0f0;
+}
+
+.drawerClose {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #9ca3af;
+  padding: 4px 8px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.drawerClose:hover {
+  color: #1e1e1e;
+  background: #f3f4f6;
+}
+
+.drawerNom {
+  font-family: var(--font-titre);
+  font-size: 18px;
+  font-weight: 800;
+  color: #1e1e1e;
+  margin: 0 0 8px;
+  padding-right: 32px;
+}
+
+.drawerDesc {
+  font-size: 13px;
+  color: #4b5563;
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+
+.drawerTags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.drawerTag {
+  border: 1px solid var(--bordure-tag);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  color: #1e1e1e;
+  background: #fff;
+}
+
+.drawerContact {
+  display: block;
+  font-size: 13px;
+  color: var(--bleu-primaire);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.drawerContact:hover {
+  text-decoration: underline;
+}
+
+/* ── Liste des stands ── */
+.liste {
+  padding: 20px 16px;
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
+}
+
+.listeTitre {
+  font-family: var(--font-titre);
+  font-size: 18px;
+  font-weight: 900;
+  color: #1e1e1e;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin: 0 0 12px;
+}
+
+.listeItems {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.listeItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 10px 0;
+  cursor: pointer;
+  text-align: left;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.1s;
+  border-radius: 4px;
+}
+
+.listeItem:hover {
+  background: #fafafa;
+}
+
+.listeItemActif {
+  background: #eff2ff;
+}
+
+.listeMarker {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background: #ffffff;
+  border: 2px solid #1e1e1e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-titre);
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e1e1e;
+}
+
+.listeItemActif .listeMarker {
+  background: var(--bleu-primaire);
+  border-color: var(--bleu-primaire);
+  color: #fff;
+}
+
+.listeItemContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.listeItemNom {
+  font-family: var(--font-titre);
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e1e1e;
+  line-height: 1.2;
+}
+
+.listeItemDiscs {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* ── Desktop ── */
+@media (min-width: 768px) {
+  .page {
+    flex-direction: row;
+    height: calc(100vh - 60px); /* height - navbar top */
+  }
+
+  .header {
+    position: static;
+    padding: 24px 24px 16px;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    flex-shrink: 0;
+  }
+
+  .mapWrap {
+    flex: 1;
+    min-height: unset;
+  }
+
+  .mapIframe {
+    min-height: unset;
+    height: 100%;
+  }
+
+  .liste {
+    width: 340px;
+    flex-shrink: 0;
+    overflow-y: auto;
+    border-top: none;
+    border-left: 1px solid #f0f0f0;
+    padding: 20px;
+    max-height: calc(100vh - 60px);
+  }
+
+  .drawer {
+    bottom: 24px;
+    left: 360px;
+    right: 24px;
+  }
+
+  .page {
+    flex-wrap: wrap;
+  }
+
+  .header {
+    width: 340px;
+    order: 1;
+  }
+
+  .liste {
+    order: 2;
+  }
+
+  .mapWrap {
+    order: 3;
+    width: calc(100% - 340px);
+    flex-basis: calc(100% - 340px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .liste {
+    width: 380px;
+  }
+
+  .mapWrap {
+    width: calc(100% - 380px);
+    flex-basis: calc(100% - 380px);
+  }
+}

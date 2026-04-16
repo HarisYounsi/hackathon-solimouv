@@ -1,5 +1,12 @@
 /* Pied de page */
 
+/* Caché sur mobile (la NavbarBottom le remplace) */
+@media (max-width: 767px) {
+  .footer {
+    display: none;
+  }
+}
+
 .footer {
   background-color: var(--couleur-primaire);
   color: rgba(255, 255, 255, 0.9);
