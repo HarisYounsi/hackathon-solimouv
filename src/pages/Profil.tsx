@@ -51,7 +51,11 @@ export default function Profil() {
       <div className={styles.conteneur}>
         {/* En-tete profil */}
         <div className={styles.entete}>
-          <div className={styles.avatar}>
+          <div
+            className={styles.avatar}
+            role="img"
+            aria-label={`Avatar de ${profil ? `${profil.prenom} ${profil.nom}` : prenomAffiche}`}
+          >
             {prenomAffiche.charAt(0).toUpperCase()}
           </div>
           <div className={styles.identite}>

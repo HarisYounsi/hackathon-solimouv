@@ -69,6 +69,13 @@
   letter-spacing: 0.05em;
 }
 
+.legendeListe {
+  display: contents; /* hérite du flex parent sans ajouter de boite */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 /* Liste des activités */
 .listeActivites {
   display: flex;

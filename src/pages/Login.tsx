@@ -80,7 +80,7 @@ export default function Login() {
 
         {/* Message d'erreur */}
         {erreur && (
-          <div className={styles.erreur} role="alert">
+          <div id="erreur-login" className={styles.erreur} role="alert" aria-live="assertive">
             {erreur}
           </div>
         )}
@@ -97,6 +97,9 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="votre@email.fr"
               required
+              aria-required="true"
+              aria-invalid={erreur ? 'true' : undefined}
+              aria-describedby={erreur ? 'erreur-login' : undefined}
               autoComplete="email"
               autoFocus
             />
@@ -112,6 +115,9 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               required
+              aria-required="true"
+              aria-invalid={erreur ? 'true' : undefined}
+              aria-describedby={erreur ? 'erreur-login' : undefined}
               autoComplete="current-password"
             />
           </div>

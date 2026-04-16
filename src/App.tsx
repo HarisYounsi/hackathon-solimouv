@@ -25,7 +25,7 @@ export default function App() {
         <Navbar />
 
         {/* Contenu principal - change selon la route */}
-        <main className="contenu-principal">
+        <main id="contenu-principal" className="contenu-principal">
           <Routes>
             {/* Page d'accueil */}
             <Route path="/" element={<Accueil />} />

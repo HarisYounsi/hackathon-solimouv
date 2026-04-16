@@ -3,7 +3,7 @@
  * Responsive : menu hamburger sur mobile, liens horizontaux sur desktop.
  */
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import styles from './Navbar.module.css'
@@ -31,6 +31,16 @@ export default function Navbar() {
 
   const prenomAffiche = currentUser?.displayName?.split(' ')[0] ?? 'Mon profil'
 
+  // Fermer le menu mobile avec Escape
+  useEffect(() => {
+    if (!menuOuvert) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') fermerMenu()
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [menuOuvert])
+
   async function handleLogout() {
     await logout()
     navigate('/')
@@ -40,8 +50,8 @@ export default function Navbar() {
     <header className={styles.header}>
       <nav className={styles.nav} aria-label="Navigation principale">
         {/* Logo / Nom de l'app */}
-        <NavLink to="/" className={styles.logo} onClick={fermerMenu}>
-          <span className={styles.logoEmoji}>🏃</span>
+        <NavLink to="/" className={styles.logo} onClick={fermerMenu} aria-label="Solimouv' - Accueil">
+          <span className={styles.logoEmoji} aria-hidden="true">🏃</span>
           <span className={styles.logoTexte}>
             Solimouv<span className={styles.logoAccent}>'</span>
           </span>
@@ -95,6 +105,7 @@ export default function Navbar() {
           className={styles.hamburger}
           onClick={() => setMenuOuvert(!menuOuvert)}
           aria-expanded={menuOuvert}
+          aria-controls="menu-mobile"
           aria-label={menuOuvert ? 'Fermer le menu' : 'Ouvrir le menu'}
         >
           <span className={styles.hamburgerBarre} />
@@ -105,7 +116,7 @@ export default function Navbar() {
 
       {/* Menu mobile déroulant */}
       {menuOuvert && (
-        <div className={styles.menuMobile} role="dialog" aria-label="Menu de navigation">
+        <div id="menu-mobile" className={styles.menuMobile} role="navigation" aria-label="Menu de navigation mobile">
           <ul role="list">
             {NAV_LINKS.map((lien) => (
               <li key={lien.path}>

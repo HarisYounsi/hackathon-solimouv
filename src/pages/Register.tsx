@@ -83,7 +83,7 @@ export default function Register() {
 
         {/* Message d'erreur */}
         {erreur && (
-          <div className={styles.erreur} role="alert">
+          <div id="erreur-register" className={styles.erreur} role="alert" aria-live="assertive">
             {erreur}
           </div>
         )}
@@ -102,6 +102,7 @@ export default function Register() {
                 onChange={(e) => setPrenom(e.target.value)}
                 placeholder="Marie"
                 required
+                aria-required="true"
                 autoComplete="given-name"
                 autoFocus
               />
@@ -116,6 +117,7 @@ export default function Register() {
                 onChange={(e) => setNom(e.target.value)}
                 placeholder="Dupont"
                 required
+                aria-required="true"
                 autoComplete="family-name"
               />
             </div>
@@ -131,6 +133,9 @@ export default function Register() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="votre@email.fr"
               required
+              aria-required="true"
+              aria-invalid={erreur ? 'true' : undefined}
+              aria-describedby={erreur ? 'erreur-register' : undefined}
               autoComplete="email"
             />
           </div>
@@ -138,7 +143,7 @@ export default function Register() {
           <div className={styles.champ}>
             <label htmlFor="password" className={styles.label}>
               Mot de passe
-              <span className={styles.labelHint}>(6 caracteres min.)</span>
+              <span className={styles.labelHint} id="hint-password">(6 caracteres min.)</span>
             </label>
             <input
               id="password"
@@ -148,6 +153,13 @@ export default function Register() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               required
+              aria-required="true"
+              aria-invalid={erreur ? 'true' : undefined}
+              aria-describedby={
+                [erreur ? 'erreur-register' : '', 'hint-password']
+                  .filter(Boolean)
+                  .join(' ') || undefined
+              }
               autoComplete="new-password"
             />
           </div>

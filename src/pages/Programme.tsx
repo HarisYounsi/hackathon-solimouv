@@ -127,11 +127,13 @@ export default function Programme() {
 
       <div className={`${styles.conteneur} ${styles.corps}`}>
         {/* Légende des types */}
-        <div className={styles.legende} aria-label="Légende des types d'activité">
-          <span className={styles.legendeLabel}>Types :</span>
-          <span className={`${styles.badge} ${styles.typeInitiation}`}>Initiation</span>
-          <span className={`${styles.badge} ${styles.typeAtelier}`}>Atelier</span>
-          <span className={`${styles.badge} ${styles.typeSensibilisation}`}>Sensibilisation</span>
+        <div className={styles.legende}>
+          <span className={styles.legendeLabel} id="legende-label">Types d'activite :</span>
+          <ul role="list" aria-labelledby="legende-label" className={styles.legendeListe}>
+            <li role="listitem" className={`${styles.badge} ${styles.typeInitiation}`}>Initiation</li>
+            <li role="listitem" className={`${styles.badge} ${styles.typeAtelier}`}>Atelier</li>
+            <li role="listitem" className={`${styles.badge} ${styles.typeSensibilisation}`}>Sensibilisation</li>
+          </ul>
         </div>
 
         {/* Liste des activités */}
