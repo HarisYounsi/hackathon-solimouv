@@ -57,6 +57,17 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  transition: transform 0.15s;
+  width: 100%;
+}
+
+.item:hover {
+  transform: scale(1.06);
 }
 
 /* ── Fleur + icône ── */

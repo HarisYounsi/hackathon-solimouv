@@ -67,7 +67,7 @@ export default function ActiviteDetail() {
     return (
       <div className={styles.erreur} role="alert">
         <p>Activité introuvable.</p>
-        <button className={styles.btnRetour} onClick={() => navigate('/programme')}>
+        <button className={styles.btnRetour} onClick={() => navigate('/sport')}>
           ← Retour au programme
         </button>
       </div>
@@ -91,7 +91,7 @@ export default function ActiviteDetail() {
       {/* ── Bouton fermer ── */}
       <button
         className={styles.btnFermer}
-        onClick={() => navigate('/programme')}
+        onClick={() => navigate('/sport')}
         aria-label="Fermer et retourner au programme"
         type="button"
       >

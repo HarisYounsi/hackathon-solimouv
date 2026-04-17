@@ -1,10 +1,12 @@
 /**
- * Page Sport (/sport) — grille de sports avec fleurs colorées.
- * Disciplines extraites depuis Firestore /associations, dupliquées pour remplir la grille.
+ * Page Sport (/sport) — grille d'activités avec fleurs colorées.
+ * Chaque fleur = une activité depuis Firestore /activites.
+ * Clic → page détail /activite/:id
  */
 
+import { useNavigate } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
-import { useAssociations } from '../hooks/useFirestore'
+import { useActivites } from '../hooks/useFirestore'
 import styles from './Sport.module.css'
 
 const LOGO_SRC = 'https://www.figma.com/api/mcp/asset/d4c6dbfa-3721-47f7-9cf4-bfa781f8f82e'
@@ -34,32 +36,20 @@ const FLOWER_COMBOS = [
 ]
 
 export default function Sport() {
-  const { data: associations, loading, error } = useAssociations()
+  const navigate = useNavigate()
+  const { data: activites, loading, error } = useActivites()
 
   if (loading) return <LoadingSpinner message="Chargement des sports..." />
 
   if (error) {
     return (
       <div className={styles.erreur} role="alert">
-        <p>⚠️ Impossible de charger les sports : {error}</p>
+        <p>⚠️ Impossible de charger les activités : {error}</p>
       </div>
     )
   }
 
-  // Extraire disciplines uniques
-  const disciplines = Array.from(
-    new Set((associations ?? []).flatMap((a) => a.disciplines))
-  )
-
-  // Dupliquer pour remplir la grille (min 12 items)
-  const items: { label: string; combo: typeof FLOWER_COMBOS[0] }[] = []
-  const base = disciplines.length > 0 ? disciplines : ['Baseball', 'Foot', 'Badminton', 'Tennis']
-  while (items.length < 12) {
-    base.forEach((label) => {
-      items.push({ label, combo: FLOWER_COMBOS[items.length % FLOWER_COMBOS.length] })
-    })
-  }
-  const grid = items.slice(0, Math.ceil(items.length / 4) * 4)
+  const liste = activites ?? []
 
   return (
     <div className={styles.page}>
@@ -76,28 +66,32 @@ export default function Sport() {
         </p>
       </div>
 
-      {/* Grille */}
+      {/* Grille : chaque activité = une fleur cliquable */}
       <ul className={styles.grille} role="list">
-        {grid.map((item, i) => (
-          <li key={i} className={styles.item} role="listitem">
-            <div className={styles.fleurWrap}>
-              <img
-                src={item.combo.flower}
-                className={styles.fleurImg}
-                style={{ transform: `rotate(${item.combo.rotate})` }}
-                alt=""
-                aria-hidden="true"
-              />
-              <img
-                src={item.combo.icon}
-                className={styles.iconeImg}
-                alt=""
-                aria-hidden="true"
-              />
-            </div>
-            <span className={styles.label}>{item.label}</span>
-          </li>
-        ))}
+        {liste.map((activite, i) => {
+          const combo = FLOWER_COMBOS[i % FLOWER_COMBOS.length]
+          return (
+            <li key={activite.id} role="listitem">
+              <button
+                className={styles.item}
+                onClick={() => navigate(`/activite/${activite.id}`)}
+                aria-label={`Voir l'activité : ${activite.titre}`}
+                type="button"
+              >
+                <div className={styles.fleurWrap} aria-hidden="true">
+                  <img
+                    src={combo.flower}
+                    className={styles.fleurImg}
+                    style={{ transform: `rotate(${combo.rotate})` }}
+                    alt=""
+                  />
+                  <img src={combo.icon} className={styles.iconeImg} alt="" />
+                </div>
+                <span className={styles.label}>{activite.titre}</span>
+              </button>
+            </li>
+          )
+        })}
       </ul>
     </div>
   )
