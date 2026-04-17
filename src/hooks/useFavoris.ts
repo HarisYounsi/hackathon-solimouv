@@ -23,7 +23,9 @@ import { db } from '../firebase/config'
 import type { Activite } from '../types'
 import { sendRappelWebhook } from '../services/makeWebhook'
 
-const USE_MOCK = import.meta.env.VITE_APP_ENV === 'development'
+// Note : on n'utilise PAS USE_MOCK ici.
+// Les favoris/rappels sont des données utilisateur — ils doivent toujours
+// être persistés dans Firestore, même en VITE_APP_ENV=development.
 
 export function useFavoris(
   userId: string | null,
@@ -40,10 +42,6 @@ export function useFavoris(
   useEffect(() => {
     if (!userId) {
       setFavoriteIds(new Set())
-      setLoading(false)
-      return
-    }
-    if (USE_MOCK) {
       setLoading(false)
       return
     }
@@ -90,7 +88,14 @@ export function useFavoris(
         })
       }
 
-      if (!USE_MOCK) {
+      console.log('[useFavoris] toggleFavori called')
+      console.log('[useFavoris] userId:', userId)
+      console.log('[useFavoris] activiteId:', activiteId)
+      console.log('[useFavoris] estFavori (avant):', estFavori)
+      console.log('[useFavoris] path Firestore: profils/', userId)
+
+      try {
+        console.log('[useFavoris] → appel setDoc...')
         await setDoc(
           doc(db, 'profils', userId),
           {
@@ -100,6 +105,9 @@ export function useFavoris(
           },
           { merge: true },
         )
+        console.log('[useFavoris] ✅ setDoc réussi')
+      } catch (err) {
+        console.error('[useFavoris] ❌ Erreur setDoc:', err)
       }
     },
     [userId, favoriteIds],
@@ -122,7 +130,7 @@ export function useFavoris(
       })
 
       if (accept) {
-        if (!USE_MOCK) {
+        try {
           await addDoc(collection(db, 'reservations'), {
             user_email:      userEmail ?? '',
             user_nom:        userPrenom ?? '',
@@ -136,6 +144,8 @@ export function useFavoris(
             notif_envoyee:   false,
             rappel_accepte:  true,
           })
+        } catch (err) {
+          console.error('[useFavoris] ❌ Erreur création réservation rappel:', err)
         }
 
         await sendRappelWebhook({
