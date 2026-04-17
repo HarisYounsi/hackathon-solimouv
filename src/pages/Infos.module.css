@@ -96,8 +96,8 @@
 .cardBtn {
   align-self: flex-start;
   background: #ffffff;
-  color: #3952d0;
-  border: 1.5px solid #3952d0;
+  color: var(--orange-cta);
+  border: 1.5px solid var(--orange-cta);
   border-radius: 8px;
   padding: 8px 16px;
   font-size: 13px;
@@ -108,7 +108,7 @@
 }
 
 .cardBtn:hover {
-  background: #3952d0;
+  background: var(--orange-cta);
   color: #ffffff;
 }
 
