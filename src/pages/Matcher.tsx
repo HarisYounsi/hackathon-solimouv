@@ -1,7 +1,6 @@
 /**
  * Quiz Sport Matcher — Page /matcher
- * Affiche les questions du quiz une par une avec un stepper visuel.
- * Les réponses sont stockées en session uniquement (pas dans Firestore).
+ * Design Figma : logo · titre Caveat bicolore · grille 2 colonnes orange · CTA Suivant.
  */
 
 import { useState } from 'react'
@@ -11,11 +10,23 @@ import type { QuizOption } from '../types'
 import { getTop3Sports } from '../services/matcherService'
 import styles from './Matcher.module.css'
 
+const LOGO_SRC = 'https://www.figma.com/api/mcp/asset/d4c6dbfa-3721-47f7-9cf4-bfa781f8f82e'
+
+/**
+ * Découpe la question : le dernier mot (+ ponctuation finale) devient le mot-clé orange.
+ * Ex: "Tu préfères pratiquer…" → ["Tu préfères ", "pratiquer…"]
+ */
+function splitQuestion(text: string): [string, string] {
+  const trimmed = text.trimEnd()
+  const lastSpace = trimmed.lastIndexOf(' ')
+  if (lastSpace === -1) return ['', text]
+  return [text.slice(0, lastSpace + 1), text.slice(lastSpace + 1)]
+}
+
 export default function Matcher() {
   const { data: questions, loading, error } = useQuiz()
   const navigate = useNavigate()
 
-  // questionId → option choisie
   const [reponses, setReponses] = useState<Record<string, QuizOption>>({})
   const [indexCourant, setIndexCourant] = useState(0)
 
@@ -41,45 +52,43 @@ export default function Matcher() {
   const total = questions.length
   const question = questions[indexCourant]
   const reponseActuelle = reponses[question.id]
-  const progression = ((indexCourant + 1) / total) * 100
   const estDerniere = indexCourant === total - 1
+
+  const [prefixe, motCle] = splitQuestion(question.question)
 
   function choisirOption(option: QuizOption) {
     setReponses((prev) => ({ ...prev, [question.id]: option }))
   }
 
-  function aller(direction: 1 | -1) {
-    setIndexCourant((i) => i + direction)
-  }
-
-  function terminer() {
-    const tousRepondus = { ...reponses, [question.id]: reponseActuelle }
-    const sportsRecommandes = getTop3Sports(tousRepondus)
-    navigate('/matcher/resultats', { state: { sportsRecommandes, reponses: tousRepondus } })
+  function suivant() {
+    if (estDerniere) {
+      const tousRepondus = { ...reponses, [question.id]: reponseActuelle! }
+      const sportsRecommandes = getTop3Sports(tousRepondus)
+      navigate('/matcher/resultats', { state: { sportsRecommandes, reponses: tousRepondus } })
+    } else {
+      setIndexCourant((i) => i + 1)
+    }
   }
 
   return (
     <div className={styles.page}>
+      {/* Blob vert décoratif */}
+      <div className={styles.blobVert} aria-hidden="true" />
+
       <div className={styles.conteneur}>
 
-        {/* ── Stepper ── */}
-        <div className={styles.stepper} aria-label={`Question ${indexCourant + 1} sur ${total}`}>
-          <div className={styles.stepperTexte}>
-            <span className={styles.stepperLabel}>Question</span>
-            <span className={styles.stepperCompte}>{indexCourant + 1}<span className={styles.stepperTotal}>/{total}</span></span>
-          </div>
-          <div className={styles.progressBar} role="progressbar" aria-valuenow={indexCourant + 1} aria-valuemin={1} aria-valuemax={total}>
-            <div className={styles.progressFill} style={{ width: `${progression}%` }} />
-          </div>
+        {/* Logo */}
+        <div className={styles.logoWrap}>
+          <img src={LOGO_SRC} alt="Solimouv'" className={styles.logo} />
         </div>
 
-        {/* ── Question ── */}
-        <div className={styles.questionWrap}>
-          <span className={styles.questionEmoji} aria-hidden="true">{question.emoji}</span>
-          <h1 className={styles.questionTitre}>{question.question}</h1>
-        </div>
+        {/* Titre bicolore */}
+        <h1 className={styles.questionTitre}>
+          <span className={styles.titrePrefixe}>{prefixe}</span>
+          <span className={styles.titreMotCle}>{motCle}</span>
+        </h1>
 
-        {/* ── Options ── */}
+        {/* Grille d'options */}
         <ul className={styles.options} role="list">
           {question.options.map((option) => {
             const selectionne = reponseActuelle?.valeur === option.valeur
@@ -98,34 +107,15 @@ export default function Matcher() {
           })}
         </ul>
 
-        {/* ── Navigation ── */}
-        <div className={styles.nav}>
-          {indexCourant > 0 && (
-            <button className={styles.btnPrecedent} onClick={() => aller(-1)} type="button">
-              ← Précédent
-            </button>
-          )}
-
-          {!estDerniere ? (
-            <button
-              className={styles.btnSuivant}
-              onClick={() => aller(1)}
-              disabled={!reponseActuelle}
-              type="button"
-            >
-              Suivant →
-            </button>
-          ) : (
-            <button
-              className={styles.btnSuivant}
-              onClick={terminer}
-              disabled={!reponseActuelle}
-              type="button"
-            >
-              Voir mes résultats ✨
-            </button>
-          )}
-        </div>
+        {/* Bouton Suivant */}
+        <button
+          className={styles.btnSuivant}
+          onClick={suivant}
+          disabled={!reponseActuelle}
+          type="button"
+        >
+          Suivant
+        </button>
 
       </div>
     </div>

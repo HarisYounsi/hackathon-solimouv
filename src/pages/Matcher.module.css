@@ -1,22 +1,53 @@
 /* ============================================================
    Quiz Sport Matcher — /matcher
+   Design Figma : blanc · titre Caveat bicolore · grille 2 col orange · CTA Suivant
    ============================================================ */
 
 .page {
   min-height: 100dvh;
-  background: #f8f9fa;
+  background: #ffffff;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 24px 16px 100px; /* 100px pour la NavbarBottom mobile */
+  padding: 24px 16px 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Blob vert décoratif (bas) ── */
+.blobVert {
+  position: fixed;
+  bottom: 60px;
+  left: -60px;
+  width: 200px;
+  height: 180px;
+  background: #78c442;
+  border-radius: 60% 40% 70% 30% / 50% 60% 40% 70%;
+  z-index: 0;
+  opacity: 0.22;
+  pointer-events: none;
 }
 
 .conteneur {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  max-width: 560px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px;
+}
+
+/* ── Logo ── */
+.logoWrap {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.logo {
+  height: 36px;
+  width: auto;
 }
 
 /* ── Chargement / Erreur ── */
@@ -36,151 +67,86 @@
   text-decoration: none;
 }
 
-/* ── Stepper ── */
-.stepper {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.stepperTexte {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-}
-
-.stepperLabel {
-  font-size: 0.85rem;
-  color: #6b7280;
-  font-weight: 500;
-}
-
-.stepperCompte {
-  font-family: var(--font-titre);
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: #1e1e1e;
-  line-height: 1;
-}
-
-.stepperTotal {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #9ca3af;
-}
-
-.progressBar {
-  height: 6px;
-  background: #e5e7eb;
-  border-radius: 99px;
-  overflow: hidden;
-}
-
-.progressFill {
-  height: 100%;
-  background: var(--orange-cta);
-  border-radius: 99px;
-  transition: width 0.35s ease;
-}
-
-/* ── Question ── */
-.questionWrap {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.questionEmoji {
-  font-size: 2.5rem;
-  line-height: 1;
-}
-
+/* ── Titre bicolore (Caveat) ── */
 .questionTitre {
-  font-family: var(--font-titre);
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: #1e1e1e;
+  font-family: var(--font-script);
+  font-size: 2rem;
+  font-weight: 700;
   margin: 0;
-  line-height: 1.25;
+  line-height: 1.2;
+  color: var(--bleu-primaire);
 }
 
-/* ── Options ── */
+.titrePrefixe {
+  color: var(--bleu-primaire);
+}
+
+.titreMotCle {
+  color: var(--orange-cta);
+  font-style: italic;
+}
+
+/* ── Grille options 2 colonnes ── */
 .options {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
 .optionCard {
   width: 100%;
-  text-align: left;
-  padding: 14px 18px;
-  border: 2px solid #e5e7eb;
-  border-radius: 10px;
-  background: #ffffff;
+  min-height: 80px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 12px;
+  border: none;
+  border-radius: 14px;
+  background: var(--orange-cta);
   font-family: var(--font-titre);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: #1e1e1e;
+  color: #ffffff;
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  transition: background 0.15s, transform 0.1s;
   line-height: 1.3;
 }
 
 .optionCard:hover {
-  border-color: var(--bleu-primaire);
-  background: #f0f3ff;
+  background: #e04e1f;
 }
 
-/* Sélectionnée : bordure bleue + fond bleu clair */
+.optionCard:active {
+  transform: scale(0.97);
+}
+
+/* Sélectionnée → bleue */
 .optionSelectionne {
-  border-color: var(--bleu-primaire);
-  background: #eef1fd;
-  color: var(--bleu-primaire);
+  background: var(--bleu-primaire);
 }
 
-/* ── Navigation ── */
-.nav {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
+.optionSelectionne:hover {
+  background: #2d42b8;
 }
 
-.btnPrecedent {
-  background: none;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 12px 20px;
-  font-family: var(--font-titre);
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #6b7280;
-  cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
-}
-
-.btnPrecedent:hover {
-  border-color: #9ca3af;
-  color: #1e1e1e;
-}
-
+/* ── Bouton Suivant ── */
 .btnSuivant {
+  width: 100%;
   background: var(--orange-cta);
   border: none;
-  border-radius: 8px;
-  padding: 13px 28px;
+  border-radius: 14px;
+  padding: 16px;
   font-family: var(--font-titre);
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #ffffff;
   cursor: pointer;
   transition: opacity 0.15s;
-  flex: 1;
-  max-width: 260px;
+  margin-top: 4px;
 }
 
 .btnSuivant:hover:not(:disabled) {
@@ -200,20 +166,13 @@
   }
 
   .questionTitre {
-    font-size: 1.75rem;
+    font-size: 2.4rem;
   }
 
-  .options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .optionCard {
-    height: 100%;
-  }
-
-  .btnSuivant {
-    flex: none;
+  .blobVert {
+    width: 280px;
+    height: 250px;
+    bottom: 80px;
+    left: -80px;
   }
 }
