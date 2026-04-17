@@ -20,7 +20,7 @@
     margin: 0 auto;
     padding: 28px 40px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     align-items: start;
     gap: 32px;
   }
