@@ -1,14 +1,12 @@
 /**
  * Barre de navigation fixe en bas — mobile uniquement (cachée sur desktop).
- * 5 onglets : Accueil, Carte, Planning, Sport, Info/Profil
- * Si connecté, l'onglet "Info" est remplacé par un avatar → /profil.
+ * 5 onglets fixes : Accueil, Carte, Planning, Sport, Info
  */
 
 import { NavLink } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
 import styles from './NavbarBottom.module.css'
 
-const TABS_STATIQUES = [
+const TABS = [
   {
     path: '/',
     label: 'Accueil',
@@ -52,27 +50,22 @@ const TABS_STATIQUES = [
       </svg>
     ),
   },
+  {
+    path: '/infos',
+    label: 'Info',
+    exact: false,
+    icon: (
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M7 1V13M1 7H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    ),
+  },
 ]
 
-const TAB_INFO = {
-  path: '/infos',
-  label: 'Info',
-  exact: false,
-  icon: (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path d="M7 1V13M1 7H13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  ),
-}
-
 export default function NavbarBottom() {
-  const { currentUser } = useAuth()
-  const prenom = currentUser?.displayName?.split(' ')[0] ?? null
-  const initiale = prenom ? prenom.charAt(0).toUpperCase() : null
-
   return (
     <nav className={styles.navbar} aria-label="Navigation principale">
-      {TABS_STATIQUES.map((tab) => (
+      {TABS.map((tab) => (
         <NavLink
           key={tab.path}
           to={tab.path}
@@ -85,33 +78,6 @@ export default function NavbarBottom() {
           <span className={styles.tabLabel}>{tab.label}</span>
         </NavLink>
       ))}
-
-      {/* Dernier onglet : Info (non connecté) ou Avatar (connecté) */}
-      {initiale ? (
-        <NavLink
-          to="/profil"
-          className={({ isActive }) =>
-            `${styles.tab} ${isActive ? styles.tabActif : ''}`
-          }
-          aria-label={`Mon profil — ${prenom}`}
-        >
-          <span className={styles.tabIcon}>
-            <span className={styles.avatar} aria-hidden="true">{initiale}</span>
-          </span>
-          <span className={styles.tabLabel}>{prenom}</span>
-        </NavLink>
-      ) : (
-        <NavLink
-          to={TAB_INFO.path}
-          end={TAB_INFO.exact}
-          className={({ isActive }) =>
-            `${styles.tab} ${isActive ? styles.tabActif : ''}`
-          }
-        >
-          <span className={styles.tabIcon}>{TAB_INFO.icon}</span>
-          <span className={styles.tabLabel}>{TAB_INFO.label}</span>
-        </NavLink>
-      )}
     </nav>
   )
 }
