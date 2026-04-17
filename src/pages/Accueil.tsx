@@ -24,7 +24,8 @@ const FLOWER_PURPLE = 'https://www.figma.com/api/mcp/asset/bcbf9a72-4e98-44c0-ae
 
 // ── Sport section — fleurs colorées (node 113:1876) ───────────
 // Chaque sport : fleur blob colorée (Vector5-8) + icône sport centrée dessus
-const SPORTS = [
+// Items dupliqués pour remplir le carousel horizontal
+const SPORTS_BASE = [
   {
     label: 'Baseball',
     flower: 'https://www.figma.com/api/mcp/asset/0977c7e1-25cf-41de-ae0c-691d64c384d0', // Vector5 orange
@@ -50,6 +51,9 @@ const SPORTS = [
     flowerRotate: '180deg',
   },
 ]
+
+// Dupliquer pour avoir assez d'items dans le carousel
+const SPORTS = [...SPORTS_BASE, ...SPORTS_BASE]
 
 // ── Programme card assets ─────────────────────────────────────
 const CARD_WAVE   = 'https://www.figma.com/api/mcp/asset/b19c2b01-4629-4f0b-8ab1-294ed032d430'
@@ -257,8 +261,8 @@ export default function Accueil() {
           <Link to="/associations" className={styles.voirPlusLink}>Voir plus</Link>
         </div>
         <div className={styles.sportCarousel}>
-          {SPORTS.map((s) => (
-            <div key={s.label} className={styles.sportItem}>
+          {SPORTS.map((s, i) => (
+            <div key={`${s.label}-${i}`} className={styles.sportItem}>
               <div className={styles.sportFlowerWrap}>
                 <img
                   src={s.flower}
