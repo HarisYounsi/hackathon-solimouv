@@ -117,25 +117,6 @@ export default function Carte() {
             </g>
           ))}
 
-          {/* ─────────────────────────────────────
-              Marker Coralie — position utilisateur (rose)
-          ───────────────────────────────────── */}
-          <g aria-label="Position de Coralie">
-            {/* Cercle rose */}
-            <circle cx="122" cy="278" r="13" fill="#e91e8c"/>
-            {/* Badge "Coralie" */}
-            <rect x="139" y="269" width="62" height="20" rx="10" fill="#e91e8c"/>
-            <text
-              x="170" y="283"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontWeight="bold"
-              fontFamily="Nunito, sans-serif"
-            >
-              Coralie
-            </text>
-          </g>
         </svg>
       </div>
 
