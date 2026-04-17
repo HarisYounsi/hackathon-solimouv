@@ -1,6 +1,6 @@
-/* Navbar principale - mobile first */
+/* Navbar principale — desktop uniquement (mobile : NavbarBottom) */
 
-/* Cachée sur mobile : la NavbarBottom prend le relai */
+/* Cachée sur mobile */
 @media (max-width: 767px) {
   .header {
     display: none;
@@ -8,216 +8,130 @@
 }
 
 .header {
-  background-color: var(--couleur-primaire);
-  color: white;
+  background: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .nav {
   max-width: var(--largeur-max);
   margin: 0 auto;
-  padding: 0 var(--espacement-md);
+  padding: 0 24px;
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
 }
 
-/* Logo */
+/* Logo — gauche */
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
   text-decoration: none;
-  color: white;
-  font-weight: 700;
-  font-size: 1.25rem;
+  flex-shrink: 0;
 }
 
-.logoEmoji {
-  font-size: 1.5rem;
+.logoTexte {
+  font-family: var(--font-titre);
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #1e1e1e;
+  letter-spacing: -0.01em;
 }
 
 .logoAccent {
-  color: var(--couleur-secondaire);
+  color: var(--couleur-primaire);
 }
 
-/* Liens desktop - cachés sur mobile */
+/* Liens — centre */
 .liens {
-  display: none;
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: var(--espacement-sm);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  justify-content: center;
 }
 
 .lien {
-  color: rgba(255, 255, 255, 0.85);
+  color: #4b5563;
   text-decoration: none;
-  padding: 8px 12px;
+  padding: 6px 12px;
   border-radius: 6px;
-  font-size: 0.95rem;
-  transition: background-color 0.2s, color 0.2s;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.15s, background 0.15s;
 }
 
 .lien:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: white;
+  color: #1e1e1e;
+  background: #f3f4f6;
 }
 
 .lienActif {
-  background-color: var(--couleur-secondaire);
   color: var(--couleur-primaire);
-  font-weight: 600;
+  font-weight: 700;
 }
 
-/* Bouton hamburger - visible sur mobile */
-.hamburger {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-}
-
-.hamburgerBarre {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background-color: white;
-  border-radius: 2px;
-  transition: transform 0.2s;
-}
-
-/* Menu mobile */
-.menuMobile {
-  background-color: var(--couleur-primaire);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: var(--espacement-sm) 0;
-}
-
-.menuMobile ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.lienMobile {
-  display: block;
-  color: rgba(255, 255, 255, 0.85);
-  text-decoration: none;
-  padding: var(--espacement-sm) var(--espacement-md);
-  font-size: 1rem;
-  transition: background-color 0.2s;
-}
-
-.lienMobile:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.lienMobileActif {
-  color: var(--couleur-secondaire);
-  font-weight: 600;
-  border-left: 3px solid var(--couleur-secondaire);
-  padding-left: calc(var(--espacement-md) - 3px);
-}
-
-/* Zone auth */
+/* Auth — droite */
 .authZone {
-  display: none;
+  display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .lienProfil {
-  color: rgba(255, 255, 255, 0.9);
+  color: #4b5563;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 600;
   padding: 6px 10px;
   border-radius: 6px;
-  transition: background-color 0.2s;
+  transition: background 0.15s;
 }
 
 .lienProfil:hover {
-  background-color: rgba(255, 255, 255, 0.15);
+  background: #f3f4f6;
+  color: #1e1e1e;
 }
 
 .btnConnexion {
-  background-color: var(--couleur-secondaire);
-  color: var(--couleur-primaire);
+  background: var(--couleur-primaire);
+  color: #ffffff;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
-  padding: 7px 16px;
+  padding: 8px 18px;
   border-radius: 6px;
-  transition: opacity 0.2s;
+  transition: opacity 0.15s;
+  white-space: nowrap;
 }
 
 .btnConnexion:hover {
-  opacity: 0.85;
+  opacity: 0.87;
 }
 
 .btnDeconnexion {
   background: none;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid #e5e7eb;
+  color: #4b5563;
   font-size: 0.85rem;
   font-weight: 500;
   font-family: inherit;
   padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .btnDeconnexion:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.7);
-  color: white;
-}
-
-/* Deconnexion mobile */
-.lienMobileBtnDeconnexion {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.7);
-  font-family: inherit;
-  font-size: 1rem;
-  padding: var(--espacement-sm) var(--espacement-md);
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.lienMobileBtnDeconnexion:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-/* Desktop : afficher les liens, cacher le hamburger */
-@media (min-width: 768px) {
-  .liens {
-    display: flex;
-  }
-
-  .hamburger {
-    display: none;
-  }
-
-  .menuMobile {
-    display: none;
-  }
-
-  .authZone {
-    display: flex;
-  }
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #1e1e1e;
 }
