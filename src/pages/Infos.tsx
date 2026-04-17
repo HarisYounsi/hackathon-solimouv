@@ -1,165 +1,71 @@
 /**
- * Page Infos Pratiques du festival.
- * Affiche lieu, transports, accessibilité et contact.
+ * Page Infos — liste verticale des associations partenaires du festival.
+ * Design : logo · cards avec bordure bleue · tag catégorie · bouton Découvrir.
  */
 
+import { useNavigate } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
-import Button from '../components/Button'
-import { useInfosFestival } from '../hooks/useFirestore'
+import { useAssociations } from '../hooks/useFirestore'
+import type { Association } from '../types'
 import styles from './Infos.module.css'
 
+const LOGO_SRC = 'https://www.figma.com/api/mcp/asset/d4c6dbfa-3721-47f7-9cf4-bfa781f8f82e'
+
+function CardAssociation({ asso }: { asso: Association }) {
+  const navigate = useNavigate()
+  const categorie = asso.disciplines[0] ?? asso.publics[0] ?? 'Association'
+
+  return (
+    <article className={styles.card}>
+      <div className={styles.cardHeader}>
+        <div className={styles.cardTitres}>
+          <span className={styles.cardSurtitle}>Association</span>
+          <h2 className={styles.cardNom}>{asso.nom},</h2>
+        </div>
+        <span className={styles.cardTag}>{categorie}</span>
+      </div>
+
+      <p className={styles.cardDesc}>{asso.description}</p>
+
+      <button
+        className={styles.cardBtn}
+        onClick={() => navigate('/associations')}
+        type="button"
+      >
+        Découvrir →
+      </button>
+    </article>
+  )
+}
+
 export default function Infos() {
-  const { data: infos, loading, error } = useInfosFestival()
+  const { data: associations, loading, error } = useAssociations()
 
-  if (loading) return <LoadingSpinner message="Chargement des informations..." />
+  if (loading) return <LoadingSpinner message="Chargement des associations..." />
 
-  if (error || !infos) {
+  if (error) {
     return (
       <div className={styles.erreur} role="alert">
-        <p>⚠️ Impossible de charger les informations pratiques : {error}</p>
+        <p>⚠️ Impossible de charger les associations : {error}</p>
       </div>
     )
   }
 
-  const dateFestival = new Date(infos.date_festival + 'T12:00:00').toLocaleDateString('fr-FR', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
-
   return (
-    <main className={styles.main}>
-      {/* En-tête */}
-      <div className={styles.entete}>
-        <div className={styles.conteneur}>
-          <span className={styles.tag}>Infos pratiques</span>
-          <h1 className={styles.titre}>Tout savoir pour venir</h1>
-          <p className={styles.soustitre} style={{ textTransform: 'capitalize' }}>{dateFestival}</p>
-        </div>
+    <div className={styles.page}>
+      {/* Logo */}
+      <div className={styles.logoWrap}>
+        <img src={LOGO_SRC} alt="Solimouv'" className={styles.logo} />
       </div>
 
-      <div className={`${styles.conteneur} ${styles.corps}`}>
-        <div className={styles.grille}>
-
-          {/* ---- Lieu ---- */}
-          <section className={styles.carte} aria-labelledby="titre-lieu">
-            <div className={styles.carteEntete}>
-              <span className={styles.carteEmoji}>📍</span>
-              <h2 id="titre-lieu" className={styles.carteTitre}>Lieu</h2>
-            </div>
-            <div className={styles.carteCorps}>
-              <p className={styles.lieuNom}>{infos.nom_lieu}</p>
-              <p className={styles.lieuAdresse}>
-                {infos.adresse}<br />
-                {infos.code_postal} {infos.ville}
-              </p>
-              <p className={styles.lieuHoraires}>🕐 {infos.horaires}</p>
-              {infos.lien_carte && (
-                <Button as="externe" href={infos.lien_carte} variante="primaire">
-                  📱 Ouvrir dans Google Maps
-                </Button>
-              )}
-            </div>
-          </section>
-
-          {/* ---- Transports ---- */}
-          <section className={styles.carte} aria-labelledby="titre-transports">
-            <div className={styles.carteEntete}>
-              <span className={styles.carteEmoji}>🚇</span>
-              <h2 id="titre-transports" className={styles.carteTitre}>Comment venir</h2>
-            </div>
-            <div className={styles.carteCorps}>
-              <ul className={styles.listeTransports} role="list">
-                {infos.acces_transports.map((transport, i) => (
-                  <li key={i} className={styles.transportItem}>
-                    <span className={styles.transportPuce}>•</span>
-                    {transport}
-                  </li>
-                ))}
-              </ul>
-              <p className={styles.transportNote}>
-                🚲 Stationnement vélo sur site. Nous encourageons les transports en commun
-                et les mobilités douces.
-              </p>
-            </div>
-          </section>
-
-          {/* ---- Accessibilité ---- */}
-          <section className={styles.carte} aria-labelledby="titre-access">
-            <div className={styles.carteEntete}>
-              <span className={styles.carteEmoji}>♿</span>
-              <h2 id="titre-access" className={styles.carteTitre}>Accessibilité</h2>
-            </div>
-            <div className={styles.carteCorps}>
-              <ul className={styles.listeAccess} role="list">
-                {infos.accessibilite.map((item, i) => (
-                  <li key={i} className={styles.accessItem}>
-                    <span className={styles.accessCheck}>✓</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-
-          {/* ---- Contact ---- */}
-          <section className={styles.carte} aria-labelledby="titre-contact">
-            <div className={styles.carteEntete}>
-              <span className={styles.carteEmoji}>📞</span>
-              <h2 id="titre-contact" className={styles.carteTitre}>Contact</h2>
-            </div>
-            <div className={styles.carteCorps}>
-              <div className={styles.contactListe}>
-                <div className={styles.contactItem}>
-                  <span className={styles.contactLabel}>Email</span>
-                  <a href={`mailto:${infos.email_contact}`} className={styles.contactValeur}>
-                    {infos.email_contact}
-                  </a>
-                </div>
-                {infos.tel_contact && (
-                  <div className={styles.contactItem}>
-                    <span className={styles.contactLabel}>Téléphone</span>
-                    <a href={`tel:${infos.tel_contact}`} className={styles.contactValeur}>
-                      {infos.tel_contact}
-                    </a>
-                  </div>
-                )}
-                {infos.siteWeb && (
-                  <div className={styles.contactItem}>
-                    <span className={styles.contactLabel}>Site web</span>
-                    <a href={infos.siteWeb} target="_blank" rel="noopener noreferrer" className={styles.contactValeur}>
-                      {infos.siteWeb.replace('https://', '')}
-                    </a>
-                  </div>
-                )}
-              </div>
-              <p className={styles.contactNote}>
-                Pour toute question sur le festival ou les activités, n'hésitez pas à nous contacter.
-                Nous répondons sous 48h.
-              </p>
-            </div>
-          </section>
-
-        </div>
-
-        {/* Section carte / plan */}
-        <section className={styles.sectionCarte} aria-labelledby="titre-carte">
-          <h2 id="titre-carte" className={styles.titreCarte}>Où nous trouver ?</h2>
-          <div className={styles.carteIframe}>
-            <div className={styles.carteIframeInfo}>
-              <p>📍 <strong>{infos.nom_lieu}</strong></p>
-              <p>{infos.adresse}, {infos.code_postal} {infos.ville}</p>
-              {infos.lien_carte && (
-                <Button as="externe" href={infos.lien_carte} variante="secondaire">
-                  Ouvrir la carte
-                </Button>
-              )}
-            </div>
-          </div>
-        </section>
-
-      </div>
-    </main>
+      {/* Liste des associations */}
+      <ul className={styles.liste} role="list">
+        {(associations ?? []).map((asso) => (
+          <li key={asso.id} role="listitem">
+            <CardAssociation asso={asso} />
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
