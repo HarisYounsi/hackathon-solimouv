@@ -29,7 +29,7 @@ const TABS = [
     ),
   },
   {
-    path: '/programme',
+    path: '/planning',
     label: 'Planning',
     exact: false,
     icon: (

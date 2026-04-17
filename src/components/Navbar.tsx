@@ -10,7 +10,7 @@ import styles from './Navbar.module.css'
 const NAV_LINKS = [
   { path: '/',             label: 'Accueil',        exact: true },
   { path: '/carte',        label: 'Carte' },
-  { path: '/programme',    label: 'Planning' },
+  { path: '/planning',     label: 'Planning' },
   { path: '/sport',        label: 'Sport' },
   { path: '/infos',        label: 'Info' },
 ]
