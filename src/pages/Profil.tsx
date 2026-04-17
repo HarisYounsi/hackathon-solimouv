@@ -1,11 +1,13 @@
 /**
  * Page profil utilisateur (protegee).
  * Affiche les infos du profil Firestore : prenom, email, points, badges, sports favoris.
+ * Sections : Mes favoris, Mes réservations, Supprimer le compte (confirmation 2 étapes).
  */
 
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { doc, getDoc } from 'firebase/firestore'
+import { Link, useNavigate } from 'react-router-dom'
+import { doc, getDoc, deleteDoc } from 'firebase/firestore'
+import { deleteUser } from 'firebase/auth'
 import { db } from '../firebase/config'
 import { useAuth } from '../contexts/AuthContext'
 import type { Profil as ProfilType } from '../types'
@@ -13,8 +15,11 @@ import styles from './Profil.module.css'
 
 export default function Profil() {
   const { currentUser, logout } = useAuth()
+  const navigate = useNavigate()
   const [profil, setProfil] = useState<ProfilType | null>(null)
   const [chargement, setChargement] = useState(true)
+  const [confirmeSuppression, setConfirmeSuppression] = useState(false)
+  const [supprimant, setSupprimant] = useState(false)
 
   useEffect(() => {
     if (!currentUser) return
@@ -38,6 +43,20 @@ export default function Profil() {
     ?? 'Utilisateur'
 
   const emailAffiche = profil?.email ?? currentUser?.email ?? ''
+
+  async function handleSupprimerCompte() {
+    if (!currentUser) return
+    setSupprimant(true)
+    try {
+      await deleteDoc(doc(db, 'profils', currentUser.uid))
+      await deleteUser(currentUser)
+      navigate('/')
+    } catch (err) {
+      console.error('[Profil] Erreur suppression compte:', err)
+      setSupprimant(false)
+      setConfirmeSuppression(false)
+    }
+  }
 
   if (chargement) {
     return (
@@ -117,8 +136,17 @@ export default function Profil() {
         </div>
 
         {/* Mes favoris */}
-        <Link to="/mes-favoris" className={styles.lienFavoris}>
-          ❤️ Mes activités favorites
+        <Link to="/mes-favoris" className={styles.lienSection}>
+          <span className={styles.lienSectionIcone}>❤️</span>
+          <span className={styles.lienSectionTexte}>Mes activités favorites</span>
+          <span className={styles.lienSectionFleche}>→</span>
+        </Link>
+
+        {/* Mes réservations */}
+        <Link to="/mes-reservations" className={styles.lienSection}>
+          <span className={styles.lienSectionIcone}>📅</span>
+          <span className={styles.lienSectionTexte}>Mes réservations</span>
+          <span className={styles.lienSectionFleche}>→</span>
         </Link>
 
         {/* Bouton deconnexion */}
@@ -129,6 +157,41 @@ export default function Profil() {
         >
           Se deconnecter
         </button>
+
+        {/* Supprimer le compte — confirmation 2 étapes */}
+        {!confirmeSuppression ? (
+          <button
+            className={styles.btnSupprimerCompte}
+            onClick={() => setConfirmeSuppression(true)}
+            type="button"
+          >
+            Supprimer mon compte
+          </button>
+        ) : (
+          <div className={styles.confirmationSuppression}>
+            <p className={styles.confirmationTexte}>
+              ⚠️ Cette action est irréversible. Toutes tes données seront supprimées.
+            </p>
+            <div className={styles.confirmationBtns}>
+              <button
+                className={styles.btnAnnuler}
+                onClick={() => setConfirmeSuppression(false)}
+                type="button"
+                disabled={supprimant}
+              >
+                Annuler
+              </button>
+              <button
+                className={styles.btnConfirmerSuppression}
+                onClick={handleSupprimerCompte}
+                type="button"
+                disabled={supprimant}
+              >
+                {supprimant ? 'Suppression...' : 'Confirmer la suppression'}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
