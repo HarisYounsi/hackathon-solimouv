@@ -130,6 +130,8 @@ export interface Reservation {
   date_reservation: Timestamp
   /** Indique si la notification de confirmation a été envoyée */
   notif_envoyee: boolean
+  /** Rappel activé depuis le quiz / programme (optionnel) */
+  rappel_accepte?: boolean
 }
 
 // -------------------------------------------------------
@@ -202,6 +204,8 @@ export interface Profil {
   sports_favoris: string[]
   /** IDs des associations que l'utilisateur suit */
   associations_suivies: string[]
+  /** IDs des activités mises en favoris */
+  activites_favorites?: string[]
   /** IDs des réservations de l'utilisateur */
   reservations_ids: string[]
   /** Score de gamification (incrémenté par réservation, participation, etc.) */

@@ -141,9 +141,9 @@ function CarteActivite({
               onClick={() => navigate('/login')}
               type="button"
             >
-              Connectez-vous
+              Connecte-toi
             </button>{' '}
-            pour sauvegarder vos favoris
+            pour sauvegarder tes favoris
           </p>
         )}
 
@@ -175,7 +175,7 @@ export default function Programme() {
   const { data: activites, loading, error } = useActivites()
 
   const userPrenom = currentUser?.displayName?.split(' ')[0] ?? null
-  const { favoris, toggleFavori, setRappel } = useFavoris(
+  const { favoriteIds, rappelIds, toggleFavori, setRappel } = useFavoris(
     currentUser?.uid ?? null,
     currentUser?.email ?? null,
     userPrenom,
@@ -223,10 +223,10 @@ export default function Programme() {
               <CarteActivite
                 key={activite.id}
                 activite={activite}
-                isFavori={activite.id in favoris}
-                rappelAccepte={favoris[activite.id]?.rappel_accepte ?? false}
+                isFavori={favoriteIds.has(activite.id)}
+                rappelAccepte={rappelIds.has(activite.id)}
                 estConnecte={currentUser !== null}
-                onToggleFavori={() => toggleFavori(activite)}
+                onToggleFavori={() => toggleFavori(activite.id)}
                 onSetRappel={(accept) => setRappel(activite, accept)}
               />
             ))}
