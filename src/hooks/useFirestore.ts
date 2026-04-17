@@ -9,8 +9,8 @@
 import { useState, useEffect } from 'react'
 import { collection, getDocs, doc, getDoc, orderBy, query } from 'firebase/firestore'
 import { db } from '../firebase/config'
-import { mockAssociations, mockActivites, mockInfosFestival } from '../firebase/mockData'
-import type { Association, Activite, InfosFestival, LoadingState } from '../types'
+import { mockAssociations, mockActivites, mockInfosFestival, mockQuizQuestions } from '../firebase/mockData'
+import type { Association, Activite, InfosFestival, QuizQuestion, LoadingState } from '../types'
 
 const USE_MOCK = import.meta.env.VITE_APP_ENV === 'development'
 
@@ -82,6 +82,45 @@ export function useActivites(): LoadingState<Activite[]> {
           id: d.id,
           ...d.data(),
         })) as Activite[]
+        setState({ data, loading: false, error: null })
+      } catch (err) {
+        setState({ data: null, loading: false, error: err instanceof Error ? err.message : 'Erreur inconnue' })
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  return state
+}
+
+// -------------------------------------------------------
+// HOOK : Questions du quiz Sport Matcher (triées par ordre)
+// -------------------------------------------------------
+
+export function useQuiz(): LoadingState<QuizQuestion[]> {
+  const [state, setState] = useState<LoadingState<QuizQuestion[]>>({
+    data: null,
+    loading: true,
+    error: null,
+  })
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (USE_MOCK) {
+        await new Promise((r) => setTimeout(r, 300))
+        const sorted = [...mockQuizQuestions].sort((a, b) => a.ordre - b.ordre)
+        setState({ data: sorted, loading: false, error: null })
+        return
+      }
+
+      try {
+        const q = query(collection(db, 'quiz'), orderBy('ordre'))
+        const snapshot = await getDocs(q)
+        const data: QuizQuestion[] = snapshot.docs.map((d) => ({
+          id: d.id,
+          ...d.data(),
+        })) as QuizQuestion[]
         setState({ data, loading: false, error: null })
       } catch (err) {
         setState({ data: null, loading: false, error: err instanceof Error ? err.message : 'Erreur inconnue' })

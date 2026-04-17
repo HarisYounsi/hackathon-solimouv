@@ -1,0 +1,269 @@
+/* ============================================================
+   Résultats Sport Matcher — /matcher/resultats
+   ============================================================ */
+
+.page {
+  min-height: 100dvh;
+  background: #f8f9fa;
+  padding: 24px 16px 100px;
+}
+
+.conteneur {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── Titre ── */
+.titreSect {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.titre {
+  font-family: var(--font-titre);
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #1e1e1e;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.sousTitre {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Chargement */
+.chargement {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.95rem;
+  padding: 32px 0;
+}
+
+/* ── Sports recommandés ── */
+.sportsWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sportsLabel {
+  font-family: var(--font-titre);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.sportsTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sportTag {
+  background: var(--bleu-primaire);
+  color: #ffffff;
+  font-family: var(--font-titre);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 99px;
+}
+
+/* ── Liste associations ── */
+.assoListe {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Card association ── */
+.assoCard {
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.assoCardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.assoNom {
+  font-family: var(--font-titre);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1e1e1e;
+  margin: 0;
+}
+
+.assoDisciplines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.disciplineTag {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 0.8rem;
+  color: #4b5563;
+  background: #f9fafb;
+  font-weight: 500;
+}
+
+.assoDesc {
+  font-size: 0.9rem;
+  color: #4b5563;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ── Actions dans la card ── */
+.assoActions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btnSavoir {
+  display: inline-block;
+  font-family: var(--font-titre);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--bleu-primaire);
+  text-decoration: none;
+  align-self: flex-start;
+}
+
+.btnSavoir:hover {
+  text-decoration: underline;
+}
+
+.contactBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Checkbox RGPD */
+.rgpdLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.rgpdCheckbox {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: var(--bleu-primaire);
+  cursor: pointer;
+}
+
+.btnContacter {
+  background: var(--orange-cta);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-family: var(--font-titre);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  align-self: flex-start;
+}
+
+.btnContacter:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.btnContacter:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.confirmationMsg {
+  font-size: 0.9rem;
+  color: var(--vert-cta);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ── Actions finales ── */
+.actionsFinales {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.btnRecommencer {
+  background: none;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-family: var(--font-titre);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #4b5563;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btnRecommencer:hover {
+  border-color: var(--bleu-primaire);
+  color: var(--bleu-primaire);
+}
+
+.btnToutesAsso {
+  font-family: var(--font-titre);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--bleu-primaire);
+  text-decoration: none;
+}
+
+.btnToutesAsso:hover {
+  text-decoration: underline;
+}
+
+/* ── Desktop ── */
+@media (min-width: 768px) {
+  .page {
+    padding: 48px 24px 80px;
+  }
+
+  .titre {
+    font-size: 2.2rem;
+  }
+
+  .actionsFinales {
+    flex-direction: row;
+    justify-content: center;
+  }
+}

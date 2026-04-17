@@ -218,7 +218,7 @@ export default function Accueil() {
             Que tu sois là pour transpirer, pour rigoler ou pour rencontrer du monde,
             on a une place pour toi.
           </p>
-          <Link to="/associations" className={styles.heroCta}>
+          <Link to="/matcher" className={styles.heroCta}>
             Trouver mon sport
           </Link>
         </div>

@@ -1,0 +1,219 @@
+/* ============================================================
+   Quiz Sport Matcher — /matcher
+   ============================================================ */
+
+.page {
+  min-height: 100dvh;
+  background: #f8f9fa;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 16px 100px; /* 100px pour la NavbarBottom mobile */
+}
+
+.conteneur {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── Chargement / Erreur ── */
+.chargement,
+.erreur {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.btnRetour {
+  display: inline-block;
+  margin-top: 16px;
+  color: var(--bleu-primaire);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ── Stepper ── */
+.stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stepperTexte {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.stepperLabel {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.stepperCompte {
+  font-family: var(--font-titre);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #1e1e1e;
+  line-height: 1;
+}
+
+.stepperTotal {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.progressBar {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--orange-cta);
+  border-radius: 99px;
+  transition: width 0.35s ease;
+}
+
+/* ── Question ── */
+.questionWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.questionEmoji {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.questionTitre {
+  font-family: var(--font-titre);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1e1e1e;
+  margin: 0;
+  line-height: 1.25;
+}
+
+/* ── Options ── */
+.options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.optionCard {
+  width: 100%;
+  text-align: left;
+  padding: 14px 18px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  background: #ffffff;
+  font-family: var(--font-titre);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e1e1e;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  line-height: 1.3;
+}
+
+.optionCard:hover {
+  border-color: var(--bleu-primaire);
+  background: #f0f3ff;
+}
+
+/* Sélectionnée : bordure bleue + fond bleu clair */
+.optionSelectionne {
+  border-color: var(--bleu-primaire);
+  background: #eef1fd;
+  color: var(--bleu-primaire);
+}
+
+/* ── Navigation ── */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btnPrecedent {
+  background: none;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-family: var(--font-titre);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btnPrecedent:hover {
+  border-color: #9ca3af;
+  color: #1e1e1e;
+}
+
+.btnSuivant {
+  background: var(--orange-cta);
+  border: none;
+  border-radius: 8px;
+  padding: 13px 28px;
+  font-family: var(--font-titre);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  flex: 1;
+  max-width: 260px;
+}
+
+.btnSuivant:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.btnSuivant:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Desktop ── */
+@media (min-width: 768px) {
+  .page {
+    padding: 48px 24px 80px;
+    align-items: center;
+  }
+
+  .questionTitre {
+    font-size: 1.75rem;
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .optionCard {
+    height: 100%;
+  }
+
+  .btnSuivant {
+    flex: none;
+  }
+}

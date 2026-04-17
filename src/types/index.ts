@@ -213,6 +213,27 @@ export interface Profil {
 }
 
 // -------------------------------------------------------
+// CONTACTS — Sport Matcher (Brique G)
+// -------------------------------------------------------
+
+/**
+ * Demande de contact générée depuis la page résultats du matcher.
+ * Collection Firestore : /contacts
+ */
+export interface Contact {
+  /** ID de l'association contactée */
+  association_id: string
+  /** Nom de l'association (dénormalisé) */
+  association_nom: string
+  /** Sports recommandés par le quiz à cette session */
+  sports_recommandes: string[]
+  /** Consentement RGPD explicite — toujours true si stocké */
+  consentement_rgpd: true
+  /** Horodatage de la demande */
+  created_at: Timestamp
+}
+
+// -------------------------------------------------------
 // UTILITAIRES
 // -------------------------------------------------------
 

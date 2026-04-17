@@ -17,6 +17,8 @@ import Carte from './pages/Carte'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Profil from './pages/Profil'
+import Matcher from './pages/Matcher'
+import MatcherResultats from './pages/MatcherResultats'
 
 export default function App() {
   return (
@@ -34,6 +36,10 @@ export default function App() {
               <Route path="/programme" element={<Programme />} />
               <Route path="/infos" element={<Infos />} />
               <Route path="/carte" element={<Carte />} />
+
+              {/* Sport Matcher */}
+              <Route path="/matcher" element={<Matcher />} />
+              <Route path="/matcher/resultats" element={<MatcherResultats />} />
 
               {/* Authentification */}
               <Route path="/login" element={<Login />} />

@@ -4,7 +4,7 @@
  * Les IDs correspondent aux document IDs du script seed.
  */
 
-import type { Association, Activite, InfosFestival } from '../types'
+import type { Association, Activite, InfosFestival, QuizQuestion } from '../types'
 
 // -------------------------------------------------------
 // ASSOCIATIONS
@@ -248,6 +248,84 @@ export const mockActivites: Activite[] = [
 // -------------------------------------------------------
 // INFOS PRATIQUES
 // -------------------------------------------------------
+
+// -------------------------------------------------------
+// QUIZ — Sport Matcher
+// -------------------------------------------------------
+
+export const mockQuizQuestions: QuizQuestion[] = [
+  {
+    id: 'q1',
+    ordre: 1,
+    emoji: '🤝',
+    question: 'Tu préfères pratiquer…',
+    options: [
+      { label: 'Seul(e)', valeur: 'solo', sports_associes: ['Running', 'Yoga', 'Gym douce', 'Marche nordique', 'Meditation'] },
+      { label: 'En équipe', valeur: 'equipe', sports_associes: ['Football', 'Volley-ball', 'Basket fauteuil', 'Sports collectifs'] },
+      { label: 'En petit groupe', valeur: 'groupe', sports_associes: ['Self-defense', 'Arts martiaux', 'Jeux collectifs', 'Aquagym'] },
+      { label: 'Peu importe !', valeur: 'indifferent', sports_associes: ['Course a pied', 'Plein air', 'Sports de raquette', 'Yoga senior'] },
+    ],
+  },
+  {
+    id: 'q2',
+    ordre: 2,
+    emoji: '💪',
+    question: "Ton niveau d'intensité préféré ?",
+    options: [
+      { label: 'Tout doux', valeur: 'doux', sports_associes: ['Yoga', 'Gym douce', 'Meditation', 'Respiration', 'Yoga senior'] },
+      { label: 'Modéré', valeur: 'modere', sports_associes: ['Marche nordique', 'Running', 'Aquagym', 'Sports de raquette'] },
+      { label: 'Intense', valeur: 'intense', sports_associes: ['Football', 'Boxe', 'Self-defense', 'Para-athletisme', 'Course a pied'] },
+      { label: 'Je veux tout essayer', valeur: 'varie', sports_associes: ['Volley-ball', 'Arts martiaux', 'Jeux collectifs', 'Parcours motricite'] },
+    ],
+  },
+  {
+    id: 'q3',
+    ordre: 3,
+    emoji: '🎯',
+    question: 'Ton principal objectif ?',
+    options: [
+      { label: 'Garder la forme', valeur: 'forme', sports_associes: ['Gym douce', 'Yoga', 'Aquagym', 'Running', 'Marche nordique'] },
+      { label: 'Rencontrer des gens', valeur: 'social', sports_associes: ['Football', 'Volley-ball', 'Sports collectifs', 'Jeux collectifs'] },
+      { label: 'Me défouler', valeur: 'defouler', sports_associes: ['Boxe', 'Self-defense', 'Arts martiaux', 'Para-athletisme'] },
+      { label: 'Découvrir un sport', valeur: 'decouvrir', sports_associes: ['Basket fauteuil', 'Tennis de table adapte', 'Parcours motricite', 'Plein air'] },
+    ],
+  },
+  {
+    id: 'q4',
+    ordre: 4,
+    emoji: '🌿',
+    question: 'Tu préfères quel environnement ?',
+    options: [
+      { label: 'En plein air', valeur: 'exterieur', sports_associes: ['Football', 'Plein air', 'Running', 'Marche nordique', 'Course a pied'] },
+      { label: 'En salle / intérieur', valeur: 'interieur', sports_associes: ['Yoga', 'Gym douce', 'Basket fauteuil', 'Boxe', 'Self-defense'] },
+      { label: 'Les deux, ça me va', valeur: 'les_deux', sports_associes: ['Arts martiaux', 'Volley-ball', 'Sports collectifs', 'Aquagym'] },
+    ],
+  },
+  {
+    id: 'q5',
+    ordre: 5,
+    emoji: '📅',
+    question: 'À quelle fréquence veux-tu pratiquer ?',
+    options: [
+      { label: 'Une fois par semaine', valeur: 'une_fois', sports_associes: ['Yoga', 'Gym douce', 'Arts martiaux', 'Volley-ball'] },
+      { label: '2 à 3 fois par semaine', valeur: 'deux_trois', sports_associes: ['Running', 'Football', 'Self-defense', 'Course a pied'] },
+      { label: 'De temps en temps', valeur: 'ponctuel', sports_associes: ['Jeux collectifs', 'Parcours motricite', 'Plein air', 'Sports de raquette'] },
+      { label: 'Tous les jours si possible !', valeur: 'quotidien', sports_associes: ['Yoga', 'Meditation', 'Marche nordique', 'Respiration'] },
+    ],
+  },
+  {
+    id: 'q6',
+    ordre: 6,
+    emoji: '😊',
+    question: 'Tu te décris plutôt comme…',
+    options: [
+      { label: 'Un(e) compétiteur/trice', valeur: 'competiteur', sports_associes: ['Football', 'Boxe', 'Para-athletisme', 'Volley-ball', 'Tennis de table adapte'] },
+      { label: 'Quelqu\'un qui cherche le bien-être', valeur: 'bienetre', sports_associes: ['Yoga', 'Meditation', 'Gym douce', 'Aquagym', 'Respiration'] },
+      { label: 'Un(e) aventurier/ère', valeur: 'aventurier', sports_associes: ['Plein air', 'Course a pied', 'Marche nordique', 'Arts martiaux'] },
+      { label: 'Un(e) joueur/joueuse', valeur: 'joueur', sports_associes: ['Jeux collectifs', 'Sports de raquette', 'Basket fauteuil', 'Parcours motricite'] },
+    ],
+  },
+]
 
 export const mockInfosFestival: InfosFestival = {
   id: 'infos',
