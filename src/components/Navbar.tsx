@@ -3,28 +3,18 @@
  * Structure : logo gauche · liens centre · bouton connexion droite.
  */
 
-import { NavLink, useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
+import { NavLink } from 'react-router-dom'
 import styles from './Navbar.module.css'
 
 const NAV_LINKS = [
-  { path: '/',             label: 'Accueil',        exact: true },
-  { path: '/associations', label: 'Associations' },
-  { path: '/programme',    label: 'Programme' },
-  { path: '/infos',        label: 'Infos pratiques' },
+  { path: '/',        label: 'Accueil',  exact: true },
+  { path: '/carte',   label: 'Carte' },
+  { path: '/programme', label: 'Planning' },
+  { path: '/associations', label: 'Sport' },
+  { path: '/infos',   label: 'Info' },
 ]
 
 export default function Navbar() {
-  const { currentUser, logout } = useAuth()
-  const navigate = useNavigate()
-
-  const prenomAffiche = currentUser?.displayName?.split(' ')[0] ?? 'Mon profil'
-
-  async function handleLogout() {
-    await logout()
-    navigate('/')
-  }
-
   return (
     <header className={styles.header}>
       <nav className={styles.nav} aria-label="Navigation principale">
@@ -52,28 +42,6 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-
-        {/* Auth — droite */}
-        <div className={styles.authZone}>
-          {currentUser ? (
-            <>
-              <NavLink to="/profil" className={styles.lienProfil}>
-                {prenomAffiche}
-              </NavLink>
-              <button
-                className={styles.btnDeconnexion}
-                onClick={handleLogout}
-                type="button"
-              >
-                Déconnexion
-              </button>
-            </>
-          ) : (
-            <NavLink to="/login" className={styles.btnConnexion}>
-              Connexion
-            </NavLink>
-          )}
-        </div>
 
       </nav>
     </header>
