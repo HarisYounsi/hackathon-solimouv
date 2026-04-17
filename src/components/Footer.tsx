@@ -1,63 +1,72 @@
 /**
- * Pied de page de l'application.
- * Affiche les informations de contact Up Sport! et les liens utiles.
+ * Pied de page — desktop uniquement.
+ * Logo Caveat orange · navigation centre · contact droite.
  */
 
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import styles from './Footer.module.css'
 
-export default function Footer() {
-  const annee = new Date().getFullYear()
+const NAV_LINKS = [
+  { path: '/',        label: 'Accueil',  exact: true },
+  { path: '/carte',   label: 'Carte' },
+  { path: '/planning',label: 'Planning' },
+  { path: '/sport',   label: 'Sport' },
+  { path: '/infos',   label: 'Info' },
+]
 
+export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.contenu}>
-        {/* Colonne 1 : À propos */}
+
+        {/* Logo */}
         <div className={styles.colonne}>
-          <h3 className={styles.titre}>
-            🏃 Solimouv<span className={styles.accent}>'</span>
-          </h3>
-          <p className={styles.description}>
-            Festival du sport inclusif organisé par l'association <strong>Up Sport!</strong>.
-            Pour un sport accessible à toutes et à tous.
-          </p>
+          <span className={styles.logo}>
+            Solimouv<span className={styles.logoAccent}>'</span>
+          </span>
         </div>
 
-        {/* Colonne 2 : Navigation rapide */}
-        <div className={styles.colonne}>
-          <h3 className={styles.titre}>Navigation</h3>
+        {/* Navigation */}
+        <nav className={styles.colonne} aria-label="Navigation footer">
           <ul className={styles.liste} role="list">
-            <li><Link to="/" className={styles.lien}>Accueil</Link></li>
-            <li><Link to="/associations" className={styles.lien}>Associations</Link></li>
-            <li><Link to="/programme" className={styles.lien}>Programme</Link></li>
-            <li><Link to="/infos" className={styles.lien}>Infos pratiques</Link></li>
+            {NAV_LINKS.map((lien) => (
+              <li key={lien.path}>
+                <NavLink
+                  to={lien.path}
+                  end={lien.exact}
+                  className={({ isActive }) =>
+                    `${styles.lien} ${isActive ? styles.lienActif : ''}`
+                  }
+                >
+                  {lien.label}
+                </NavLink>
+              </li>
+            ))}
           </ul>
-        </div>
+        </nav>
 
-        {/* Colonne 3 : Contact */}
+        {/* Contact */}
         <div className={styles.colonne}>
-          <h3 className={styles.titre}>Contact</h3>
+          <p className={styles.contactTitre}>Contact</p>
           <ul className={styles.liste} role="list">
             <li>
               <a href="mailto:contact@upsport.fr" className={styles.lien}>
-                📧 contact@upsport.fr
+                contact@upsport.fr
               </a>
             </li>
             <li>
-              <a href="https://upsport.fr" className={styles.lien} target="_blank" rel="noopener noreferrer">
-                🌐 upsport.fr
+              <a
+                href="https://upsport.fr"
+                className={styles.lien}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                upsport.fr
               </a>
             </li>
           </ul>
         </div>
-      </div>
 
-      {/* Ligne de bas de page */}
-      <div className={styles.bas}>
-        <p>
-          © {annee} Up Sport! — Tous droits réservés.
-          Fait avec ❤️ pour le sport pour tous.
-        </p>
       </div>
     </footer>
   )
