@@ -16,6 +16,7 @@ import Infos from './pages/Infos'
 import Carte from './pages/Carte'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import RegisterConfirmation from './pages/RegisterConfirmation'
 import Profil from './pages/Profil'
 import Matcher from './pages/Matcher'
 import MatcherResultats from './pages/MatcherResultats'
@@ -61,6 +62,7 @@ export default function App() {
               {/* Authentification */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/register/succes" element={<RegisterConfirmation />} />
 
               {/* Profil (protégé) */}
               <Route

@@ -1,153 +1,295 @@
-/* Styles partagés Login + Register */
+/* ============================================================
+   Auth — Login + Register — Design Figma maquette
+   Fond blanc · décorations coins · formulaire pleine page mobile
+   ============================================================ */
 
+/* ── Page ── */
 .page {
-  min-height: 100vh;
+  min-height: 100dvh;
+  background: #ffffff;
+  position: relative;
+  overflow: hidden;
   display: flex;
+  flex-direction: column;
+  padding: 0 0 40px;
+}
+
+/* ── Décorations de coins ── */
+.decoTopRight {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 110px;
+  height: 110px;
+  background: var(--orange-cta);
+  border-radius: 50% 0 50% 50%;
+  transform: rotate(-15deg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.decoTopRightSmall {
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  background: var(--orange-cta);
+  border-radius: 50%;
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.decoBottomLeft {
+  position: absolute;
+  bottom: 60px;
+  left: -20px;
+  width: 80px;
+  height: 80px;
+  background: #78c442;
+  border-radius: 0 50% 50% 50%;
+  transform: rotate(20deg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.decoBottomRight {
+  position: absolute;
+  bottom: -20px;
+  right: -10px;
+  width: 70px;
+  height: 70px;
+  background: var(--orange-cta);
+  border-radius: 50% 0 0 50%;
+  opacity: 0.7;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.decoTopLeft {
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 60px;
+  height: 60px;
+  background: #78c442;
+  border-radius: 0 50% 50% 0;
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Contenu ── */
+.contenu {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px 0;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ── Bouton retour ── */
+.btnRetour {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--espacement-md);
-  background: linear-gradient(135deg, var(--couleur-primaire) 0%, var(--couleur-accent) 100%);
-}
-
-/* Carte centrale */
-.carte {
-  background: white;
-  border-radius: var(--rayon-lg);
-  padding: var(--espacement-lg);
-  width: 100%;
-  max-width: 420px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-  gap: var(--espacement-md);
-}
-
-/* En-tête */
-.entete {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.emoji {
-  font-size: 2.5rem;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  font-size: 1.4rem;
+  color: #1e1e1e;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 24px;
   line-height: 1;
+  text-decoration: none;
+}
+
+/* ── Titre ── */
+.titreWrap {
+  margin-bottom: 28px;
 }
 
 .titre {
+  font-family: var(--font-titre);
   font-size: 1.6rem;
   font-weight: 800;
-  color: var(--couleur-primaire);
-  margin: 0;
+  color: #1e1e1e;
+  margin: 0 0 2px;
+  line-height: 1.2;
 }
 
-.soustitre {
-  font-size: 0.9rem;
-  color: var(--couleur-texte-leger);
-  margin: 0;
+.titreCaveat {
+  font-family: var(--font-script);
+  font-size: 2rem;
+  font-weight: 700;
+  display: block;
+  line-height: 1.1;
 }
 
-/* Message d'erreur */
+.titreCaveatOrange {
+  color: var(--orange-cta);
+}
+
+.titreCaveatVert {
+  color: #78c442;
+}
+
+/* ── Message d'erreur ── */
 .erreur {
   background-color: #fef2f2;
   color: #b91c1c;
   border: 1px solid #fecaca;
-  border-radius: var(--rayon-md);
-  padding: var(--espacement-sm);
-  font-size: 0.875rem;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
   line-height: 1.5;
+  margin-bottom: 12px;
 }
 
-/* Formulaire */
+/* ── Formulaire ── */
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
-/* Champs prenom + nom côte à côte sur desktop */
 .champDouble {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 10px;
 }
 
 .champ {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-}
-
-.label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--couleur-texte);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.labelHint {
-  font-weight: 400;
-  color: var(--couleur-texte-leger);
-  font-size: 0.78rem;
 }
 
 .input {
-  border: 1.5px solid var(--couleur-bordure);
-  border-radius: var(--rayon-md);
-  padding: 10px 14px;
-  font-size: 0.95rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
   font-family: inherit;
-  color: var(--couleur-texte);
-  background: white;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  color: #1e1e1e;
+  background: #ffffff;
+  transition: border-color 0.2s;
   width: 100%;
 }
 
 .input:focus {
   outline: none;
-  border-color: var(--couleur-primaire);
-  box-shadow: 0 0 0 3px rgba(26, 26, 46, 0.08);
+  border-color: var(--bleu-primaire);
 }
 
 .input::placeholder {
-  color: #d1d5db;
+  color: #9ca3af;
 }
 
-/* Bouton principal */
+/* Dropdown Âge */
+.select {
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #9ca3af;
+  background: #ffffff;
+  width: 100%;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1L6 7L11 1' stroke='%239ca3af' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--bleu-primaire);
+  color: #1e1e1e;
+}
+
+.selectValide {
+  color: #1e1e1e;
+}
+
+/* Radio Homme / Femme */
+.radioGroup {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.radioLabel input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--bleu-primaire);
+  cursor: pointer;
+}
+
+/* Lien mot de passe oublié */
+.mdpOublie {
+  text-align: right;
+  font-size: 0.8rem;
+  color: #6b7280;
+  text-decoration: none;
+  margin-top: -4px;
+}
+
+.mdpOublie:hover {
+  color: var(--bleu-primaire);
+}
+
+/* ── Bouton principal (noir) ── */
 .btnPrimaire {
-  background-color: var(--couleur-primaire);
+  background: #1e1e1e;
   color: white;
   border: none;
-  border-radius: var(--rayon-md);
-  padding: 12px 20px;
+  border-radius: 12px;
+  padding: 14px 20px;
   font-size: 1rem;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  transition: background-color 0.2s, opacity 0.2s;
+  transition: opacity 0.2s;
   width: 100%;
+  margin-top: 4px;
 }
 
 .btnPrimaire:hover:not(:disabled) {
-  background-color: var(--couleur-accent);
+  opacity: 0.85;
 }
 
 .btnPrimaire:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
-/* Séparateur "ou" */
+/* ── Séparateur "ou" ── */
 .separateur {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: var(--couleur-texte-leger);
+  color: #9ca3af;
   font-size: 0.85rem;
+  margin: 4px 0;
 }
 
 .separateur::before,
@@ -155,30 +297,78 @@
   content: '';
   flex: 1;
   height: 1px;
-  background-color: var(--couleur-bordure);
+  background: #e5e7eb;
 }
 
-/* Lien bas de page */
+/* ── Boutons sociaux ── */
+.sociaux {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btnSocial {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  padding: 0;
+}
+
+.btnSocial:hover {
+  border-color: #9ca3af;
+  background: #f9fafb;
+}
+
+.btnSocial svg {
+  display: block;
+}
+
+/* ── Lien bas de page ── */
 .lienBas {
   text-align: center;
-  font-size: 0.875rem;
-  color: var(--couleur-texte-leger);
-  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 16px 0 0;
 }
 
 .lien {
-  color: var(--couleur-primaire);
+  color: var(--orange-cta);
   font-weight: 600;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .lien:hover {
-  color: var(--couleur-accent);
+  text-decoration: underline;
 }
 
-/* Responsive : champDouble en colonne sur mobile étroit */
-@media (max-width: 380px) {
-  .champDouble {
-    grid-template-columns: 1fr;
+/* ── Desktop ── */
+@media (min-width: 768px) {
+  .page {
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+  }
+
+  .contenu {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+    padding: 36px 40px;
+    margin: auto;
+  }
+
+  .decoTopRight,
+  .decoTopRightSmall,
+  .decoBottomLeft,
+  .decoBottomRight,
+  .decoTopLeft {
+    display: none;
   }
 }

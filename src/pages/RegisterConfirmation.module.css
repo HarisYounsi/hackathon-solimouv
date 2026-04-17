@@ -1,0 +1,114 @@
+/* ============================================================
+   RegisterConfirmation — Compte créé!
+   ============================================================ */
+
+.page {
+  min-height: 100dvh;
+  background: #ffffff;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Décorations de coins (identiques à Auth) ── */
+.decoTopRight {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 110px;
+  height: 110px;
+  background: #f95625;
+  border-radius: 50% 0 50% 50%;
+  transform: rotate(-15deg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.decoTopRightSmall {
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  background: #f95625;
+  border-radius: 50%;
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.decoBottomLeft {
+  position: absolute;
+  bottom: 60px;
+  left: -20px;
+  width: 80px;
+  height: 80px;
+  background: #78c442;
+  border-radius: 0 50% 50% 50%;
+  transform: rotate(20deg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.decoBottomRight {
+  position: absolute;
+  bottom: -20px;
+  right: -10px;
+  width: 70px;
+  height: 70px;
+  background: #f95625;
+  border-radius: 50% 0 0 50%;
+  opacity: 0.7;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.decoTopLeft {
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 60px;
+  height: 60px;
+  background: #78c442;
+  border-radius: 0 50% 50% 0;
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Contenu centré ── */
+.contenu {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 32px;
+  gap: 20px;
+}
+
+/* ── Badge check ── */
+.checkWrap {
+  margin-bottom: 8px;
+}
+
+/* ── Titre ── */
+.titre {
+  font-family: var(--font-titre);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1e1e1e;
+  margin: 0;
+}
+
+/* ── Sous-titre ── */
+.sousTitre {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0;
+  max-width: 260px;
+  line-height: 1.5;
+}
