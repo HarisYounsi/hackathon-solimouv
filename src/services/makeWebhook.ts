@@ -9,6 +9,8 @@ export interface WebhookContactPayload {
   association_id: string
   association_nom: string
   sports_recommandes: string[]
+  prenom: string
+  email: string
   timestamp: string
 }
 

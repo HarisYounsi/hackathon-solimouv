@@ -160,7 +160,43 @@
 .contactBlock {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+}
+
+/* Champs Prénom / Email */
+.champGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.champLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.champInput {
+  padding: 9px 12px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 7px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #1e1e1e;
+  background: #ffffff;
+  transition: border-color 0.15s;
+  outline: none;
+}
+
+.champInput:focus {
+  border-color: var(--bleu-primaire);
+}
+
+/* Champ grisé pour utilisateur connecté */
+.champGrise {
+  background: #f3f4f6;
+  color: #6b7280;
+  cursor: not-allowed;
 }
 
 /* Checkbox RGPD */

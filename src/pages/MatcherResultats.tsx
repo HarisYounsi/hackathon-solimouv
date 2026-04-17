@@ -2,12 +2,18 @@
  * Résultats du Quiz Sport Matcher — Page /matcher/resultats
  * Affiche les associations dont les disciplines matchent le top 3 des sports recommandés.
  * Permet de contacter une association (RGPD + Firestore + webhook Make).
+ *
+ * - Utilisateur connecté  : champs Prénom/Email pré-remplis et grisés
+ * - Utilisateur non connecté : champs Prénom/Email obligatoires à saisir
+ * - Checkbox RGPD : décochée par défaut
+ * - Bouton désactivé si checkbox décochée OU champs vides
  */
 
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { collection, addDoc, Timestamp } from 'firebase/firestore'
 import { db } from '../firebase/config'
+import { useAuth } from '../contexts/AuthContext'
 import { useAssociations } from '../hooks/useFirestore'
 import { sendContactWebhook } from '../services/makeWebhook'
 import type { Association } from '../types'
@@ -16,7 +22,9 @@ import styles from './MatcherResultats.module.css'
 // ── Utilitaire : match sport ─────────────────────────────────
 function associationMatcheSports(asso: Association, sports: string[]): boolean {
   const disciplinesNorm = asso.disciplines.map((d) => d.toLowerCase())
-  return sports.some((s) => disciplinesNorm.some((d) => d.includes(s.toLowerCase()) || s.toLowerCase().includes(d)))
+  return sports.some((s) =>
+    disciplinesNorm.some((d) => d.includes(s.toLowerCase()) || s.toLowerCase().includes(d))
+  )
 }
 
 // ── Composant : Card association résultat ────────────────────
@@ -26,30 +34,43 @@ interface CardAssoProps {
 }
 
 function CardAssoResultat({ asso, sportsRecommandes }: CardAssoProps) {
+  const { currentUser } = useAuth()
+
+  // Pré-remplir depuis le profil Firebase si connecté
+  const prenomInitial = currentUser?.displayName?.split(' ')[0] ?? ''
+  const emailInitial  = currentUser?.email ?? ''
+
   const [consentement, setConsentement] = useState(false)
-  const [envoye, setEnvoye] = useState(false)
-  const [envoi, setEnvoi] = useState(false)
+  const [prenom, setPrenom]             = useState(prenomInitial)
+  const [email, setEmail]               = useState(emailInitial)
+  const [envoye, setEnvoye]             = useState(false)
+  const [envoi, setEnvoi]               = useState(false)
+
+  const estConnecte  = currentUser !== null
+  const formulaireOk = consentement && prenom.trim() !== '' && email.trim() !== ''
 
   async function contacter() {
-    if (!consentement || envoi) return
+    if (!formulaireOk || envoi) return
     setEnvoi(true)
 
     try {
-      // Stocker dans Firestore /contacts
       await addDoc(collection(db, 'contacts'), {
-        association_id: asso.id,
-        association_nom: asso.nom,
+        association_id:    asso.id,
+        association_nom:   asso.nom,
         sports_recommandes: sportsRecommandes,
+        prenom:            prenom.trim(),
+        email:             email.trim(),
         consentement_rgpd: true,
-        created_at: Timestamp.now(),
+        created_at:        Timestamp.now(),
       })
 
-      // Envoyer au webhook Make
       await sendContactWebhook({
-        association_id: asso.id,
-        association_nom: asso.nom,
+        association_id:    asso.id,
+        association_nom:   asso.nom,
         sports_recommandes: sportsRecommandes,
-        timestamp: new Date().toISOString(),
+        prenom:            prenom.trim(),
+        email:             email.trim(),
+        timestamp:         new Date().toISOString(),
       })
 
       setEnvoye(true)
@@ -75,7 +96,12 @@ function CardAssoResultat({ asso, sportsRecommandes }: CardAssoProps) {
 
       <div className={styles.assoActions}>
         {asso.siteWeb && (
-          <a href={asso.siteWeb} target="_blank" rel="noopener noreferrer" className={styles.btnSavoir}>
+          <a
+            href={asso.siteWeb}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.btnSavoir}
+          >
             En savoir plus →
           </a>
         )}
@@ -86,6 +112,40 @@ function CardAssoResultat({ asso, sportsRecommandes }: CardAssoProps) {
           </p>
         ) : (
           <div className={styles.contactBlock}>
+            {/* Champs Prénom / Email */}
+            <div className={styles.champGroup}>
+              <label className={styles.champLabel} htmlFor={`prenom-${asso.id}`}>
+                Prénom <span aria-hidden="true">*</span>
+              </label>
+              <input
+                id={`prenom-${asso.id}`}
+                type="text"
+                value={prenom}
+                onChange={(e) => setPrenom(e.target.value)}
+                disabled={estConnecte}
+                placeholder="Votre prénom"
+                className={`${styles.champInput} ${estConnecte ? styles.champGrise : ''}`}
+                autoComplete="given-name"
+              />
+            </div>
+
+            <div className={styles.champGroup}>
+              <label className={styles.champLabel} htmlFor={`email-${asso.id}`}>
+                Email <span aria-hidden="true">*</span>
+              </label>
+              <input
+                id={`email-${asso.id}`}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={estConnecte}
+                placeholder="votre@email.fr"
+                className={`${styles.champInput} ${estConnecte ? styles.champGrise : ''}`}
+                autoComplete="email"
+              />
+            </div>
+
+            {/* Checkbox RGPD — décochée par défaut */}
             <label className={styles.rgpdLabel}>
               <input
                 type="checkbox"
@@ -95,10 +155,11 @@ function CardAssoResultat({ asso, sportsRecommandes }: CardAssoProps) {
               />
               <span>J'accepte d'être contacté(e) par cette association</span>
             </label>
+
             <button
               className={styles.btnContacter}
               onClick={contacter}
-              disabled={!consentement || envoi}
+              disabled={!formulaireOk || envoi}
               type="button"
             >
               {envoi ? 'Envoi…' : 'Contacter cette association'}
@@ -113,12 +174,12 @@ function CardAssoResultat({ asso, sportsRecommandes }: CardAssoProps) {
 // ── Page principale ───────────────────────────────────────────
 export default function MatcherResultats() {
   const location = useLocation()
-  const navigate = useNavigate()
+  const navigate  = useNavigate()
   const { data: toutesAssociations, loading } = useAssociations()
 
-  const state = location.state as { sportsRecommandes?: string[]; reponses?: unknown } | null
+  const state = location.state as { sportsRecommandes?: string[] } | null
 
-  // Si accès direct sans state → rediriger vers le quiz
+  // Accès direct sans state → rediriger vers le quiz
   if (!state?.sportsRecommandes) {
     navigate('/matcher', { replace: true })
     return null
@@ -126,15 +187,14 @@ export default function MatcherResultats() {
 
   const sportsRecommandes: string[] = state.sportsRecommandes
 
-  // Filtrer les associations qui matchent
   const associationsMatchees: Association[] = (toutesAssociations ?? [])
     .filter((a) => associationMatcheSports(a, sportsRecommandes))
     .slice(0, 3)
 
-  // Fallback si aucun match : prendre les 2 premières
-  const associationsAffichees = associationsMatchees.length > 0
-    ? associationsMatchees
-    : (toutesAssociations ?? []).slice(0, 2)
+  const associationsAffichees =
+    associationsMatchees.length > 0
+      ? associationsMatchees
+      : (toutesAssociations ?? []).slice(0, 2)
 
   return (
     <div className={styles.page}>
@@ -148,7 +208,7 @@ export default function MatcherResultats() {
           </p>
         </div>
 
-        {/* ── Sports recommandés (top 3) ── */}
+        {/* ── Sports recommandés ── */}
         <div className={styles.sportsWrap}>
           <p className={styles.sportsLabel}>Tes sports recommandés</p>
           <div className={styles.sportsTags}>

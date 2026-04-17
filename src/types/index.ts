@@ -227,6 +227,10 @@ export interface Contact {
   association_nom: string
   /** Sports recommandés par le quiz à cette session */
   sports_recommandes: string[]
+  /** Prénom du demandeur */
+  prenom: string
+  /** Email du demandeur */
+  email: string
   /** Consentement RGPD explicite — toujours true si stocké */
   consentement_rgpd: true
   /** Horodatage de la demande */
