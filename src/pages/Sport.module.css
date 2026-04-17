@@ -1,0 +1,134 @@
+/* ============================================================
+   Sport — grille fleurs colorées (mobile-first)
+   ============================================================ */
+
+.page {
+  min-height: 100dvh;
+  background: #ffffff;
+  padding: 0 16px 88px;
+}
+
+/* ── Logo ── */
+.logoWrap {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0 16px;
+}
+
+.logo {
+  height: 32px;
+  width: auto;
+}
+
+/* ── En-tête ── */
+.entete {
+  margin-bottom: 20px;
+}
+
+.titre {
+  font-family: var(--font-script);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--bleu-primaire);
+  margin: 0 0 6px;
+  line-height: 1.1;
+}
+
+.sousTitre {
+  font-size: 13px;
+  font-weight: 400;
+  color: #1e1e1e;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ── Grille 4 colonnes ── */
+.grille {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px 8px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── Fleur + icône ── */
+.fleurWrap {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fleurImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.iconeImg {
+  position: relative;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* ── Label sport ── */
+.label {
+  font-family: var(--font-titre);
+  font-size: 11px;
+  font-weight: 700;
+  color: #1e1e1e;
+  text-align: center;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+/* ── Erreur ── */
+.erreur {
+  padding: 40px 16px;
+  text-align: center;
+  color: #b91c1c;
+  font-size: 14px;
+}
+
+/* ── Desktop ── */
+@media (min-width: 768px) {
+  .page {
+    max-width: 640px;
+    margin: 0 auto;
+    padding-bottom: 48px;
+  }
+
+  .grille {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px 16px;
+  }
+
+  .fleurWrap {
+    width: 90px;
+    height: 90px;
+  }
+
+  .iconeImg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .label {
+    font-size: 13px;
+  }
+}

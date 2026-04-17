@@ -40,7 +40,7 @@ const TABS = [
     ),
   },
   {
-    path: '/associations',
+    path: '/sport',
     label: 'Sport',
     exact: false,
     icon: (
