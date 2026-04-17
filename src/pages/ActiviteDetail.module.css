@@ -1,0 +1,276 @@
+/* ============================================================
+   ActiviteDetail — page détail activité (mobile-first)
+   ============================================================ */
+
+.page {
+  min-height: 100dvh;
+  background: #ffffff;
+  padding: 48px 20px 32px;
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ── Bouton fermer ── */
+.btnFermer {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #6b7280;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+  z-index: 10;
+}
+
+.btnFermer:hover {
+  color: #1e1e1e;
+  background: #f3f4f6;
+}
+
+/* ── Header : fleur + titre ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-right: 32px; /* évite le chevauchement avec le X */
+}
+
+.fleurWrap {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fleurImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.iconeImg {
+  position: relative;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.headerTexte {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 4px;
+}
+
+.titre {
+  font-family: var(--font-script);
+  font-size: 26px;
+  font-weight: 700;
+  color: #1e1e1e;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.parAsso {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ── Infos (lieu, accessibilité) ── */
+.infosList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.infosItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1e1e1e;
+}
+
+.infosIcone {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.infosPointVert {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #22c55e;
+  flex-shrink: 0;
+}
+
+/* ── Description ── */
+.description {
+  font-size: 14px;
+  color: #1e1e1e;
+  line-height: 1.55;
+  margin: 0 0 22px;
+}
+
+/* ── Sections Programme / Horaires ── */
+.section {
+  margin-bottom: 22px;
+}
+
+.sectionTitre {
+  font-family: var(--font-titre);
+  font-size: 17px;
+  font-weight: 900;
+  color: #1e1e1e;
+  margin: 0 0 10px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+}
+
+.sectionTexte {
+  font-size: 14px;
+  color: #1e1e1e;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ── Pills horaires ── */
+.horairePills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  background: #f3f4f6;
+  color: #1e1e1e;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.pillActif {
+  background: var(--bleu-primaire);
+  border-color: var(--bleu-primaire);
+  color: #ffffff;
+}
+
+/* ── Toggle notification ── */
+.notifRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 24px;
+}
+
+.notifIcone {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.notifTexte {
+  flex: 1;
+  font-size: 13px;
+  color: #1e1e1e;
+  line-height: 1.35;
+}
+
+.toggle {
+  flex-shrink: 0;
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: #d1d5db;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+  padding: 0;
+}
+
+.toggleOn {
+  background: var(--bleu-primaire);
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
+.toggleOn .toggleThumb {
+  transform: translateX(20px);
+}
+
+/* ── CTA Réserver ── */
+.btnReserver {
+  width: 100%;
+  background: var(--orange-cta);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--font-titre);
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.btnReserver:hover {
+  opacity: 0.9;
+}
+
+/* ── Erreur / retour ── */
+.erreur {
+  padding: 80px 20px;
+  text-align: center;
+  color: #b91c1c;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.btnRetour {
+  color: var(--bleu-primaire);
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}

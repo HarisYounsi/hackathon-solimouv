@@ -148,12 +148,23 @@
   flex-shrink: 0;
 }
 
+.carteTitreLien {
+  text-decoration: none;
+  flex: 1;
+  min-width: 0;
+}
+
+.carteTitreLien:hover .carteTitre {
+  color: var(--bleu-primaire);
+}
+
 .carteTitre {
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--couleur-texte);
   margin: 0;
   line-height: 1.3;
+  transition: color 0.15s;
 }
 
 .carteDescription {

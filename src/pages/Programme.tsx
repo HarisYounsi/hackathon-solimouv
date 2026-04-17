@@ -6,7 +6,7 @@
  */
 
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { useActivites } from '../hooks/useFirestore'
 import { useFavoris } from '../hooks/useFavoris'
@@ -95,7 +95,9 @@ function CarteActivite({
               {activite.emoji}
             </span>
           )}
-          <h3 className={styles.carteTitre}>{activite.titre}</h3>
+          <Link to={`/activite/${activite.id}`} className={styles.carteTitreLien}>
+            <h3 className={styles.carteTitre}>{activite.titre}</h3>
+          </Link>
 
           {/* Bouton favori */}
           <button

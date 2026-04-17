@@ -21,6 +21,7 @@ import Matcher from './pages/Matcher'
 import MatcherResultats from './pages/MatcherResultats'
 import MesFavoris from './pages/MesFavoris'
 import Sport from './pages/Sport'
+import ActiviteDetail from './pages/ActiviteDetail'
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
               <Route path="/" element={<Accueil />} />
               <Route path="/associations" element={<Associations />} />
               <Route path="/sport" element={<Sport />} />
+              <Route path="/activite/:activiteId" element={<ActiviteDetail />} />
               <Route path="/programme" element={<Programme />} />
               <Route path="/infos" element={<Infos />} />
               <Route path="/carte" element={<Carte />} />
