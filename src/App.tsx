@@ -19,6 +19,7 @@ import Register from './pages/Register'
 import Profil from './pages/Profil'
 import Matcher from './pages/Matcher'
 import MatcherResultats from './pages/MatcherResultats'
+import MesFavoris from './pages/MesFavoris'
 
 export default function App() {
   return (
@@ -40,6 +41,16 @@ export default function App() {
               {/* Sport Matcher */}
               <Route path="/matcher" element={<Matcher />} />
               <Route path="/matcher/resultats" element={<MatcherResultats />} />
+
+              {/* Mes favoris (protégé) */}
+              <Route
+                path="/mes-favoris"
+                element={
+                  <ProtectedRoute>
+                    <MesFavoris />
+                  </ProtectedRoute>
+                }
+              />
 
               {/* Authentification */}
               <Route path="/login" element={<Login />} />

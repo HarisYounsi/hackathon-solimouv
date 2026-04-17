@@ -4,6 +4,7 @@
  */
 
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase/config'
 import { useAuth } from '../contexts/AuthContext'
@@ -114,6 +115,11 @@ export default function Profil() {
             </p>
           )}
         </div>
+
+        {/* Mes favoris */}
+        <Link to="/mes-favoris" className={styles.lienFavoris}>
+          ❤️ Mes activités favorites
+        </Link>
 
         {/* Bouton deconnexion */}
         <button

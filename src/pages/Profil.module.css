@@ -171,6 +171,27 @@
   font-style: italic;
 }
 
+/* Lien Mes favoris */
+.lienFavoris {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border-radius: var(--rayon-lg);
+  padding: var(--espacement-md);
+  box-shadow: var(--ombre-carte);
+  font-family: var(--font-titre);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--couleur-texte);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.lienFavoris:hover {
+  background: #fef2f2;
+}
+
 /* Bouton deconnexion */
 .btnDeconnexion {
   background-color: transparent;

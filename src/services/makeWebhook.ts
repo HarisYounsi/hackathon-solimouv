@@ -18,6 +18,42 @@ export interface WebhookContactPayload {
  * Envoie une demande de contact au webhook Make.
  * Échoue silencieusement si l'URL n'est pas configurée.
  */
+// ── Rappel activité ──────────────────────────────────────────
+
+export interface WebhookRappelPayload {
+  prenom: string
+  email: string
+  activite_titre: string
+  heure_debut: string
+  lieu: string
+  timestamp: string
+}
+
+/**
+ * Envoie un rappel d'activité au webhook Make.
+ * Échoue silencieusement si VITE_MAKE_WEBHOOK_RAPPEL n'est pas configurée.
+ */
+export async function sendRappelWebhook(payload: WebhookRappelPayload): Promise<void> {
+  const webhookUrl = import.meta.env.VITE_MAKE_WEBHOOK_RAPPEL
+
+  if (!webhookUrl || webhookUrl === 'a_configurer') {
+    console.info('[makeWebhook] Rappel URL non configurée — webhook ignoré', payload)
+    return
+  }
+
+  try {
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+  } catch (err) {
+    console.error('[makeWebhook] Erreur rappel', err)
+  }
+}
+
+// ── Contact association ───────────────────────────────────────
+
 export async function sendContactWebhook(payload: WebhookContactPayload): Promise<void> {
   const webhookUrl = import.meta.env.VITE_MAKE_WEBHOOK_CONTACT
 

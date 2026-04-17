@@ -1,10 +1,16 @@
 /**
  * Page Programme du festival.
  * Affiche les activités triées par heure de début.
+ * Bouton cœur ❤️ pour sauvegarder une activité en favori.
+ * Toggle rappel pour les activités favorites (utilisateur connecté).
  */
 
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { useActivites } from '../hooks/useFirestore'
+import { useFavoris } from '../hooks/useFavoris'
+import { useAuth } from '../contexts/AuthContext'
 import type { Activite, TypeActivite } from '../types'
 import styles from './Programme.module.css'
 
@@ -12,7 +18,6 @@ import styles from './Programme.module.css'
 // Utilitaires
 // -------------------------------------------------------
 
-/** Formate une date ISO "YYYY-MM-DD" en libellé français */
 function formaterDate(dateIso: string): string {
   return new Date(dateIso + 'T12:00:00').toLocaleDateString('fr-FR', {
     weekday: 'long',
@@ -22,7 +27,6 @@ function formaterDate(dateIso: string): string {
   })
 }
 
-/** Badge couleur selon le type d'activité */
 function classeType(type: TypeActivite): string {
   const map: Record<TypeActivite, string> = {
     initiation: styles.typeInitiation,
@@ -32,7 +36,6 @@ function classeType(type: TypeActivite): string {
   return map[type]
 }
 
-/** Libellé affiché pour le type */
 function libelleType(type: TypeActivite): string {
   const map: Record<TypeActivite, string> = {
     initiation: 'Initiation',
@@ -46,7 +49,35 @@ function libelleType(type: TypeActivite): string {
 // Composant carte d'activité
 // -------------------------------------------------------
 
-function CarteActivite({ activite }: { activite: Activite }) {
+interface CarteActiviteProps {
+  activite: Activite
+  isFavori: boolean
+  rappelAccepte: boolean
+  estConnecte: boolean
+  onToggleFavori: () => void
+  onSetRappel: (accept: boolean) => void
+}
+
+function CarteActivite({
+  activite,
+  isFavori,
+  rappelAccepte,
+  estConnecte,
+  onToggleFavori,
+  onSetRappel,
+}: CarteActiviteProps) {
+  const navigate = useNavigate()
+  const [showLoginMsg, setShowLoginMsg] = useState(false)
+
+  function handleHeartClick() {
+    if (!estConnecte) {
+      setShowLoginMsg(true)
+      setTimeout(() => setShowLoginMsg(false), 3000)
+      return
+    }
+    onToggleFavori()
+  }
+
   return (
     <article className={styles.carteActivite} aria-label={activite.titre}>
       {/* Colonne heure */}
@@ -65,6 +96,17 @@ function CarteActivite({ activite }: { activite: Activite }) {
             </span>
           )}
           <h3 className={styles.carteTitre}>{activite.titre}</h3>
+
+          {/* Bouton favori */}
+          <button
+            className={`${styles.btnFavori} ${isFavori ? styles.btnFavoriActif : ''}`}
+            onClick={handleHeartClick}
+            aria-label={isFavori ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+            aria-pressed={isFavori}
+            type="button"
+          >
+            {isFavori ? '❤️' : '🤍'}
+          </button>
         </div>
 
         <p className={styles.carteDescription}>{activite.description}</p>
@@ -78,17 +120,47 @@ function CarteActivite({ activite }: { activite: Activite }) {
         </div>
 
         <div className={styles.carteTags}>
-          {/* Type d'activité */}
           <span className={`${styles.badge} ${classeType(activite.type)}`}>
             {libelleType(activite.type)}
           </span>
-          {/* Publics */}
           {activite.publics.map((p) => (
             <span key={p} className={`${styles.badge} ${styles.badgePublic}`}>
               {p}
             </span>
           ))}
+          {isFavori && rappelAccepte && (
+            <span className={styles.badgeRappel}>🔔 Rappel activé</span>
+          )}
         </div>
+
+        {/* Message connexion requise */}
+        {showLoginMsg && (
+          <p className={styles.loginMsg}>
+            <button
+              className={styles.loginMsgBtn}
+              onClick={() => navigate('/login')}
+              type="button"
+            >
+              Connectez-vous
+            </button>{' '}
+            pour sauvegarder vos favoris
+          </p>
+        )}
+
+        {/* Panel rappel — uniquement si favori + connecté */}
+        {isFavori && estConnecte && (
+          <div className={styles.rappelPanel}>
+            <label className={styles.rappelLabel}>
+              <input
+                type="checkbox"
+                checked={rappelAccepte}
+                onChange={(e) => onSetRappel(e.target.checked)}
+                className={styles.rappelCheckbox}
+              />
+              <span>J'accepte de recevoir un rappel pour cette activité</span>
+            </label>
+          </div>
+        )}
       </div>
     </article>
   )
@@ -99,7 +171,15 @@ function CarteActivite({ activite }: { activite: Activite }) {
 // -------------------------------------------------------
 
 export default function Programme() {
+  const { currentUser } = useAuth()
   const { data: activites, loading, error } = useActivites()
+
+  const userPrenom = currentUser?.displayName?.split(' ')[0] ?? null
+  const { favoris, toggleFavori, setRappel } = useFavoris(
+    currentUser?.uid ?? null,
+    currentUser?.email ?? null,
+    userPrenom,
+  )
 
   if (loading) return <LoadingSpinner message="Chargement du programme..." />
 
@@ -126,7 +206,7 @@ export default function Programme() {
       </div>
 
       <div className={`${styles.conteneur} ${styles.corps}`}>
-        {/* Légende des types */}
+        {/* Légende */}
         <div className={styles.legende}>
           <span className={styles.legendeLabel} id="legende-label">Types d'activite :</span>
           <ul role="list" aria-labelledby="legende-label" className={styles.legendeListe}>
@@ -140,7 +220,15 @@ export default function Programme() {
         {activites && activites.length > 0 ? (
           <div className={styles.listeActivites}>
             {activites.map((activite) => (
-              <CarteActivite key={activite.id} activite={activite} />
+              <CarteActivite
+                key={activite.id}
+                activite={activite}
+                isFavori={activite.id in favoris}
+                rappelAccepte={favoris[activite.id]?.rappel_accepte ?? false}
+                estConnecte={currentUser !== null}
+                onToggleFavori={() => toggleFavori(activite)}
+                onSetRappel={(accept) => setRappel(activite, accept)}
+              />
             ))}
           </div>
         ) : (
